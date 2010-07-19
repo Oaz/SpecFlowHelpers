@@ -6,19 +6,25 @@ namespace Oaz.SpecFlowHelpers
 {
 	public static class TableExtensions
 	{
-		public static IEnumerable<IEnumerable<KeyValuePair<string,string>>> Values(this Table table)
+		internal static IEnumerable<IEnumerable<KeyValuePair<string,string>>> Values(this Table table)
 		{
 			foreach(var row in table.Rows)
 				yield return row.Values();
 		}
 		
-		public static IEnumerable<KeyValuePair<string,string>> Values(this TableRow row)
+		internal static IEnumerable<KeyValuePair<string,string>> ValuePairs(this Table table)
+		{
+			foreach(var row in table.Rows)
+				yield return new KeyValuePair<string, string>(row[0], row[1]);
+		}
+		
+		internal static IEnumerable<KeyValuePair<string,string>> Values(this TableRow row)
 		{
 			foreach(var cell in row)
 				yield return cell;
 		}
 		
-		private static void SetPropertyValue(object obj, string propertyName, string propertyValue, Type type)
+		internal static void SetPropertyValue(object obj, string propertyName, string propertyValue, Type type)
 		{
 			var property = obj.GetType().GetProperty(propertyName);
 			if( property == null )
@@ -39,17 +45,29 @@ namespace Oaz.SpecFlowHelpers
 			}
 		}
 		
-		public static T As<T>(this Table table) where T:new()
+		public static T As<T>(this Table table) where T:class, new()
 		{
-			T obj = new T();
-			foreach(var row in table.Rows)
-			{
-				SetPropertyValue(obj, row[0], row[1], typeof(T));
-			}
-			return obj;
+			return PreventException(
+			  () =>
+			  {
+				T obj = new T();
+				foreach(var row in table.Rows)
+				{
+					SetPropertyValue(obj, row[0], row[1], typeof(T));
+				}
+				return obj;
+			  }
+			);
 		}
 		
 		public static IEnumerable<T> AsEnumerable<T>(this Table table) where T:new()
+		{
+			return PreventException(
+			  () => AsEnumerableImpl<T>(table)
+			);
+		}
+		
+		private static IEnumerable<T> AsEnumerableImpl<T>(Table table) where T:new()
 		{
 			foreach(var row in table.Rows)
 			{
@@ -59,6 +77,20 @@ namespace Oaz.SpecFlowHelpers
 					SetPropertyValue(obj, field, row[field], typeof(T));
 				}
 				yield return obj;
+			}
+		}
+		
+		private static U PreventException<U>(Func<U> execute) where U:class
+		{
+			Instance.Is<Exception>(null);
+			try
+			{
+				return execute();
+			}
+			catch(Exception e)
+			{
+				Instance.Is<Exception>(e);
+				return null;
 			}
 		}
 	}

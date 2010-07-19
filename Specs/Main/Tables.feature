@@ -27,13 +27,41 @@ Scenario: Object with properties not matching
 	 | ADouble       | 23.598              |
 	 | ADateTime     | 2010-07-17 22:34:48 |
 	When I do nothing
-	Then my Stuff values are as following
+	Then my Stuff values are NOT as following
 	 | Field         | Value               |
 	 | AString       | This is a string    |
 	 | AnInt         | 568                 |
 	 | ADouble       | 23.598              |
 	 | ADateTime     | 2010-07-17 22:34:48 |
-	Then I get an exception '  Expected: 568 for property AnInt in Stuff\n  But was:  234\n'
+	And I do not get any exception
+	
+Scenario: Object with properties matching on subset of properties
+	Given I have Stuff defined as following
+	 | Field         | Value               |
+	 | AString       | This is a string    |
+	 | AnInt         | 234                 |
+	 | ADouble       | 23.598              |
+	 | ADateTime     | 2010-07-17 22:34:48 |
+	When I do nothing
+	Then my Stuff values contains the following
+	 | Field         | Value               |
+	 | AString       | This is a string    |
+	 | ADouble       | 23.598              |
+	And I do not get any exception
+	
+Scenario: Object with properties not matching on subset of properties
+	Given I have Stuff defined as following
+	 | Field         | Value               |
+	 | AString       | This is a string    |
+	 | AnInt         | 234                 |
+	 | ADouble       | 23.598              |
+	 | ADateTime     | 2010-07-17 22:34:48 |
+	When I do nothing
+	Then my Stuff values does NOT contain the following
+	 | Field         | Value               |
+	 | AString       | This is a string    |
+	 | ADouble       | 28.598              |
+	And I do not get any exception
 	
 Scenario: Object with unknown property
 	Given I have Stuff defined as following

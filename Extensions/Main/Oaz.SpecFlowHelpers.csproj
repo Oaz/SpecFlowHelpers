@@ -40,6 +40,8 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="TableExtensions.cs" />
     <Compile Include="Instance.cs" />
+    <Compile Include="ObjectExtensions.cs" />
+    <Compile Include="ObjectProperties.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

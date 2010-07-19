@@ -1,10 +1,14 @@
 using System;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework.Constraints;
+using TechTalk.SpecFlow;
 using System.Reflection;
 
 namespace Oaz.SpecFlowHelpers.NUnit
 {
-	public class PropertiesAreEquivalentConstraint : Constraint
+	public class SomePropertiesAreEquivalentConstraint : Constraint
 	{
 		public object Expected {get;set;}
 		private string _expectedMessage;
@@ -46,12 +50,8 @@ namespace Oaz.SpecFlowHelpers.NUnit
 		}
 	}
 	
-	public static class Properties
-	{
-		public static PropertiesAreEquivalentConstraint PropertiesEquivalentTo(this ConstraintExpression constraint, object obj)
-		{
-			return new PropertiesAreEquivalentConstraint() { Expected = obj };
-		}
-	}
+
+	
+
 }
 
