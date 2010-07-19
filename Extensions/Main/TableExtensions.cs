@@ -1,6 +1,7 @@
 using System;
 using TechTalk.SpecFlow;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace Oaz.SpecFlowHelpers
 {
@@ -58,6 +59,26 @@ namespace Oaz.SpecFlowHelpers
 				return obj;
 			  }
 			);
+		}
+		
+		public static IEnumerable AsEnumerable(this Table table)
+		{
+			return PreventException(
+			  () => AsEnumerableImpl(table)
+			);
+		}
+		
+		private static IEnumerable AsEnumerableImpl(Table table)
+		{
+			foreach(var row in table.Rows)
+			{
+				var obj = new List<KeyValuePair<string,string>>();
+				foreach(var field in table.Header)
+				{
+					obj.Add( new KeyValuePair<string,string>( field, row[field] ) );
+				}
+				yield return obj;
+			}
 		}
 		
 		public static IEnumerable<T> AsEnumerable<T>(this Table table) where T:new()

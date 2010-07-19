@@ -54,20 +54,52 @@ namespace Specs.Oaz.SpecFlowHelpers
 			Assert.That (Instance.Of<Stuff> (), Is.Not.EqualTo (table).Using (Properties.LooseComparison));
 		}
 
-		[Then(@"all my Stuff values are as following")]
-		public void ThenAllMyStuffValuesAreAsFollowing (Table table)
+		[Then(@"all my Stuff values are strictly equal to the following")]
+		public void ThenAllMyStuffValuesAreStrictlyEqualToFollowing (Table table)
 		{
-			var actual = Instance.Of<IEnumerable<Stuff>> ();
-			var expected = table.AsEnumerable<Stuff> ();
-			var actualRows = actual.GetEnumerator ();
-			var expectedRows = expected.GetEnumerator ();
-			int rowcount = 0;
-			while (actualRows.MoveNext () && expectedRows.MoveNext ()) {
-				//Assert.That( actualRows.Current, Has.All.PropertiesEquivalentTo(expectedRows.Current), string.Format("At row {0}", rowcount) );
-				rowcount++;
-			}
-			Assert.That (actual.Count (), Is.EqualTo (rowcount), "More rows than expected");
-			Assert.That (expected.Count (), Is.EqualTo (rowcount), "Less rows than expected");
+			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.EqualTo (table.AsEnumerable<Stuff> ()).Using (Properties.StrictComparison));
+		}
+
+		[Then(@"all my Stuff values are NOT strictly equal to the following")]
+		public void ThenAllMyStuffValuesAreNotStrictlyEqualToFollowing (Table table)
+		{
+			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.Not.EqualTo (table.AsEnumerable<Stuff> ()).Using (Properties.StrictComparison));
+		}
+
+		[Then(@"all my Stuff values are strictly equivalent to the following")]
+		public void ThenAllMyStuffValuesAreStrictlyEquivalentToFollowing (Table table)
+		{
+			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.EquivalentTo (table.AsEnumerable<Stuff> ()).Using (Properties.StrictComparison));
+		}
+
+		[Then(@"all my Stuff values are NOT strictly equivalent to the following")]
+		public void ThenAllMyStuffValuesAreNotStrictlyEquivalentToFollowing (Table table)
+		{
+			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.Not.EquivalentTo (table.AsEnumerable<Stuff> ()).Using (Properties.StrictComparison));
+		}
+
+		[Then(@"all my Stuff values are loosely equal to the following")]
+		public void ThenAllMyStuffValuesAreLooselyEqualToFollowing (Table table)
+		{
+			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.EqualTo (table.AsEnumerable()).Using (Properties.LooseComparison));
+		}
+
+		[Then(@"all my Stuff values are NOT loosely equal to the following")]
+		public void ThenAllMyStuffValuesAreNotLooselyEqualToFollowing (Table table)
+		{
+			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.Not.EqualTo (table.AsEnumerable()).Using (Properties.LooseComparison));
+		}
+
+		[Then(@"all my Stuff values are loosely equivalent to the following")]
+		public void ThenAllMyStuffValuesAreLooselyEquivalentToFollowing (Table table)
+		{
+			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.EquivalentTo (table.AsEnumerable()).Using (Properties.LooseComparison));
+		}
+
+		[Then(@"all my Stuff values are NOT loosely equivalent to the following")]
+		public void ThenAllMyStuffValuesAreNotLooselyEquivalentToFollowing (Table table)
+		{
+			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.Not.EquivalentTo (table.AsEnumerable()).Using (Properties.LooseComparison));
 		}
 
 		[Then(@"I get an exception '(.*)'")]

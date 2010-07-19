@@ -25,7 +25,9 @@ namespace Oaz.SpecFlowHelpers
 
 		internal static IEnumerable<KeyValuePair<string,string>> PropertiesAsValuePairs(this object obj)
 		{
-			if( obj is TechTalk.SpecFlow.Table )
+			if( obj is IEnumerable<KeyValuePair<string,string>> )
+				return obj as IEnumerable<KeyValuePair<string,string>>;
+			else if( obj is TechTalk.SpecFlow.Table )
 				return (obj as TechTalk.SpecFlow.Table).ValuePairs();
 			else
 				return obj.Properties().Select(
