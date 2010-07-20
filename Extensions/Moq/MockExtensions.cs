@@ -8,7 +8,7 @@ namespace Oaz.SpecFlowHelpers.Moq
 	{
 		internal class PropertyMocker<T,P> where T:class
 		{		
-			public static void SetupGet(Mock<T> mock, string propertyName, string propertyValue)
+			public static void SetupGet(Mock<T> mock, string propertyName, object propertyValue)
 			{
 				var parameter = Expression.Parameter(typeof(T),"m");
 				var propertySelector = Expression.Property(parameter,propertyName);
@@ -18,13 +18,10 @@ namespace Oaz.SpecFlowHelpers.Moq
 			}
 		}
 		
-		public static void SetupGet<T>(this Mock<T> mock, string propertyName, string propertyValue) where T:class
+		public static void SetupGet<T>(this Mock<T> mock, string propertyName, object propertyValue) where T:class
 		{
 			var property = typeof(T).GetProperty(propertyName);
-			if( property == null )
-				throw new ApplicationException(
-				  string.Format("Unknown property {0} on type {1}", propertyName, typeof(T))
-				);
+			Tools.Check( property != null, "Unknown property {0} on type {1}", propertyName, typeof(T) );
 			var type = typeof(PropertyMocker<,>);
 			var pmType = type.MakeGenericType(typeof(T), property.PropertyType);
 			var setupGet = pmType.GetMethod("SetupGet");

@@ -7,14 +7,11 @@ namespace Oaz.SpecFlowHelpers
 {
 	public static class ObjectExtensions
 	{
-		public static void SetPropertyValue(this object obj, string propertyName, string propertyValue)
+		public static void SetPropertyValue(this object obj, string propertyName, object propertyValue)
 		{
 			var type = obj.GetType();
 			var property = type.GetProperty(propertyName);
-			if( property == null )
-				throw new ApplicationException(
-				  string.Format("Unknown property {0} on type {1}", propertyName, type)
-				);
+			Tools.Check( property != null, "Unknown property {0} on type {1}", propertyName, type );
 			try
 			{
 				object newValue = Convert.ChangeType(propertyValue, property.PropertyType);

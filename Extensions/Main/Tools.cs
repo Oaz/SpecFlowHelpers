@@ -17,9 +17,15 @@ namespace Oaz.SpecFlowHelpers
 			}
 		}
 		
-		public static T ConvertTo<T>(string val)
+		public static T ConvertTo<T>(object val)
 		{
 			return (T) Convert.ChangeType(val, typeof(T));
+		}
+		
+		public static void Check(bool condition, string message, params object[] args)
+		{
+			if( !condition )
+				throw new ApplicationException(string.Format(message, args));
 		}
 	}
 }
