@@ -48,7 +48,7 @@ namespace Oaz.SpecFlowHelpers
 		
 		public static T As<T>(this Table table) where T:class, new()
 		{
-			return PreventException(
+			return Tools.PreventException(
 			  () =>
 			  {
 				T obj = new T();
@@ -63,7 +63,7 @@ namespace Oaz.SpecFlowHelpers
 		
 		public static IEnumerable AsEnumerable(this Table table)
 		{
-			return PreventException(
+			return Tools.PreventException(
 			  () => AsEnumerableImpl(table)
 			);
 		}
@@ -83,7 +83,7 @@ namespace Oaz.SpecFlowHelpers
 		
 		public static IEnumerable<T> AsEnumerable<T>(this Table table) where T:new()
 		{
-			return PreventException(
+			return Tools.PreventException(
 			  () => AsEnumerableImpl<T>(table)
 			);
 		}
@@ -101,19 +101,6 @@ namespace Oaz.SpecFlowHelpers
 			}
 		}
 		
-		private static U PreventException<U>(Func<U> execute) where U:class
-		{
-			Instance.Is<Exception>(null);
-			try
-			{
-				return execute();
-			}
-			catch(Exception e)
-			{
-				Instance.Is<Exception>(e);
-				return null;
-			}
-		}
 	}
 }
 

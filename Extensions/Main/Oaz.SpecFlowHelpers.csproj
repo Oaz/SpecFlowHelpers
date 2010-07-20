@@ -42,6 +42,7 @@
     <Compile Include="Instance.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="ObjectProperties.cs" />
+    <Compile Include="Tools.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

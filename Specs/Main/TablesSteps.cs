@@ -33,6 +33,7 @@ namespace Specs.Oaz.SpecFlowHelpers
 		[Then(@"my Stuff values are as following")]
 		public void ThenMyStuffValuesAreAsFollowing (Table table)
 		{
+			Assert.That (Instance.Of<Stuff> (), Is.Not.Null);
 			Assert.That (Instance.Of<Stuff> (), Is.EqualTo (table.As<Stuff> ()).Using (Properties.StrictComparison));
 		}
 
