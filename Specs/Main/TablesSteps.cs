@@ -40,18 +40,21 @@ namespace Specs.Oaz.SpecFlowHelpers
 		[Then(@"my Stuff values contains the following")]
 		public void ThenMyStuffValuesContainsTheFollowing (Table table)
 		{
+			Assert.That (Instance.Of<Stuff> (), Is.Not.Null);
 			Assert.That (Instance.Of<Stuff> (), Is.EqualTo (table).Using (Properties.LooseComparison));
 		}
 
 		[Then(@"my Stuff values are NOT as following")]
 		public void ThenMyStuffValuesAreNotAsFollowing (Table table)
 		{
+			Assert.That (Instance.Of<Stuff> (), Is.Not.Null);
 			Assert.That (Instance.Of<Stuff> (), Is.Not.EqualTo (table.As<Stuff> ()).Using (Properties.StrictComparison));
 		}
 
 		[Then(@"my Stuff values does NOT contain the following")]
 		public void ThenMyStuffValuesDoesNotContainTheFollowing (Table table)
 		{
+			Assert.That (Instance.Of<Stuff> (), Is.Not.Null);
 			Assert.That (Instance.Of<Stuff> (), Is.Not.EqualTo (table).Using (Properties.LooseComparison));
 		}
 

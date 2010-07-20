@@ -21,7 +21,7 @@ namespace Oaz.SpecFlowHelpers
 		}
 	}
 	
-	public class PropertiesComparer : IEqualityComparer
+	internal class PropertiesComparer : IEqualityComparer
 	{
 		public bool IsStrict {
 			get;

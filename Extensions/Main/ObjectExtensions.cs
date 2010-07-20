@@ -7,7 +7,29 @@ namespace Oaz.SpecFlowHelpers
 {
 	public static class ObjectExtensions
 	{
-		public static IEnumerable<KeyValuePair<string,object>> Properties(this object obj)
+		public static void SetPropertyValue(this object obj, string propertyName, string propertyValue)
+		{
+			var type = obj.GetType();
+			var property = type.GetProperty(propertyName);
+			if( property == null )
+				throw new ApplicationException(
+				  string.Format("Unknown property {0} on type {1}", propertyName, type)
+				);
+			try
+			{
+				object newValue = Convert.ChangeType(propertyValue, property.PropertyType);
+				property.SetValue(obj, newValue, null);
+			}
+			catch(Exception e)
+			{
+				throw new ApplicationException(
+				  string.Format("Unsupported property type {0}", property.PropertyType),
+				  e
+				);
+			}
+		}
+		
+		internal static IEnumerable<KeyValuePair<string,object>> Properties(this object obj)
 		{
             foreach (PropertyInfo property in obj.GetType().GetProperties())
             {

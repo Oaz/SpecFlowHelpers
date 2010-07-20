@@ -4,8 +4,8 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("Moq")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Oaz.SpecFlowHelpers.Moq")]
+[assembly: AssemblyDescription("Helpers for binding SpecFlow data to Moq mocks")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("")]

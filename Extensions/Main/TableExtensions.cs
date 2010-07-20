@@ -25,37 +25,14 @@ namespace Oaz.SpecFlowHelpers
 				yield return cell;
 		}
 		
-		internal static void SetPropertyValue(object obj, string propertyName, string propertyValue, Type type)
-		{
-			var property = obj.GetType().GetProperty(propertyName);
-			if( property == null )
-				throw new ApplicationException(
-				  string.Format("Unknown property {0} on type {1}", propertyName, type)
-				);
-			try
-			{
-				object newValue = Convert.ChangeType(propertyValue, property.PropertyType);
-				property.SetValue(obj, newValue, null);
-			}
-			catch(Exception e)
-			{
-				throw new ApplicationException(
-				  string.Format("Unsupported property type {0}", property.PropertyType),
-				  e
-				);
-			}
-		}
-		
 		public static T As<T>(this Table table) where T:class, new()
 		{
-			return Tools.PreventException(
+			return Tools.HandleExceptionInstance(
 			  () =>
 			  {
 				T obj = new T();
 				foreach(var row in table.Rows)
-				{
-					SetPropertyValue(obj, row[0], row[1], typeof(T));
-				}
+					obj.SetPropertyValue(row[0], row[1]);
 				return obj;
 			  }
 			);
@@ -63,7 +40,7 @@ namespace Oaz.SpecFlowHelpers
 		
 		public static IEnumerable AsEnumerable(this Table table)
 		{
-			return Tools.PreventException(
+			return Tools.HandleExceptionInstance(
 			  () => AsEnumerableImpl(table)
 			);
 		}
@@ -74,16 +51,14 @@ namespace Oaz.SpecFlowHelpers
 			{
 				var obj = new List<KeyValuePair<string,string>>();
 				foreach(var field in table.Header)
-				{
 					obj.Add( new KeyValuePair<string,string>( field, row[field] ) );
-				}
 				yield return obj;
 			}
 		}
 		
 		public static IEnumerable<T> AsEnumerable<T>(this Table table) where T:new()
 		{
-			return Tools.PreventException(
+			return Tools.HandleExceptionInstance(
 			  () => AsEnumerableImpl<T>(table)
 			);
 		}
@@ -94,9 +69,7 @@ namespace Oaz.SpecFlowHelpers
 			{
 				T obj = new T();
 				foreach(var field in table.Header)
-				{
-					SetPropertyValue(obj, field, row[field], typeof(T));
-				}
+					obj.SetPropertyValue(field, row[field]);
 				yield return obj;
 			}
 		}

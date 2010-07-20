@@ -3,7 +3,7 @@ namespace Oaz.SpecFlowHelpers
 {
 	public static class Tools
 	{
-		public static U PreventException<U>(Func<U> execute) where U:class
+		public static U HandleExceptionInstance<U>(Func<U> execute) where U:class
 		{
 			Instance.Is<Exception>(null);
 			try

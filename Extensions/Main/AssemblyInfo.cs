@@ -4,8 +4,8 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("Main")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Oaz.SpecFlowHelpers")]
+[assembly: AssemblyDescription("Helpers for binding SpecFlow data to .NET classes")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("")]
