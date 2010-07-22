@@ -46,6 +46,7 @@
       <DependentUpon>Tables.feature</DependentUpon>
     </Compile>
     <Compile Include="TablesSteps.cs" />
+    <Compile Include="RegexSpike.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Extensions\Moq\Oaz.SpecFlowHelpers.Moq.csproj">
