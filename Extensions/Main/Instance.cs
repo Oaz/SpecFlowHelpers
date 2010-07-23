@@ -5,42 +5,49 @@ namespace Oaz.SpecFlowHelpers
 {
 	public static class Instance
 	{
-		private const string defaultName = "ù*⁼)";
-		
-		public static NamedInstance Named(string name)
+		public static InstanceHandler<T> Of<T>() where T:class
 		{
-			return new NamedInstance() { Name=name };
-		}
-		
-		public static void Is<T>(T obj) where T:class
-		{
-			Named(defaultName).Is(obj);
-		}
-		
-		public static T Of<T>() where T:class
-		{
-			return Named(defaultName).Of<T>();
+			return new InstanceHandler<T>();
 		}
 	}
 	
-	public class NamedInstance
+	public class InstanceHandler<T> where T:class
 	{
-		public string Name { get; set; }
+		private string Name { get; set; }
+		private const string defaultName = "ù*⁼)";
 		
-		public T Of<T>() where T:class
+		internal InstanceHandler()
 		{
-			var name = UniqueName<T>();
-			if(!ScenarioContext.Current.ContainsKey(name))
-				return null;
-			return ScenarioContext.Current[name] as T;
+			Name = defaultName;
 		}
 		
-		public void Is<T>(T obj) where T:class
+		public void Is(T obj)
 		{
-			ScenarioContext.Current[UniqueName<T>()] = obj;
+			ScenarioContext.Current[UniqueName()] = obj;
 		}
 		
-		private string UniqueName<T>()
+		public InstanceHandler<T> Named(string name)
+		{
+			return new InstanceHandler<T>() { Name = name };
+		}
+		
+		public T Object
+		{
+			get
+			{
+				var name = UniqueName();
+				if(!ScenarioContext.Current.ContainsKey(name))
+					return null;
+				return ScenarioContext.Current[name] as T;
+			}
+		}
+		
+		public static implicit operator T(InstanceHandler<T> ih)
+		{
+			return ih.Object;
+		}
+		
+		private string UniqueName()
 		{
 			return string.Format("{0}/{1}", typeof(T), Name);
 		}

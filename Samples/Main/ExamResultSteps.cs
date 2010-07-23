@@ -34,19 +34,19 @@ namespace Samples.Oaz.SpecFlowHelpers
         [When(@"the scores are")]
         public void WhenTheScoresAre(Table table)
         {
-			Instance.Is( table.As<ExamResults>() );
+			Instance.Of<ExamResults>().Is( table.As<ExamResults>() );
 		}
 
         [Then(@"I get my degree")]
         public void ThenIGetMyDegree()
         {
-            Assert.True( Instance.Of<ExamResults>().IsGood );
+            Assert.True( Instance.Of<ExamResults>().Object.IsGood );
         }
 
         [Then(@"I do not get my degree")]
         public void ThenIDoNotGetMyDegree()
         {
-            Assert.False( Instance.Of<ExamResults>().IsGood );
+            Assert.False( Instance.Of<ExamResults>().Object.IsGood );
         }
 	}
 }

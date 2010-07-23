@@ -26,14 +26,14 @@ namespace Specs.Oaz.SpecFlowHelpers.Moq
 		[Then(@"I get an exception '(.*)'")]
 		public void ThenIGetAnException (string message)
 		{
-			Assert.That (Instance.Of<Exception> (), Is.Not.Null);
-			Assert.That (Instance.Of<Exception> ().Message, Contains.Substring (message));
+			Assert.That (Instance.Of<Exception> ().Object, Is.Not.Null);
+			Assert.That (Instance.Of<Exception> ().Object.Message, Contains.Substring (message));
 		}
 
 		[Then(@"I do not get any exception")]
 		public void ThenIDoNotGetAnException ()
 		{
-			Assert.That (Instance.Of<Exception> (), Is.Null);
+			Assert.That (Instance.Of<Exception> ().Object, Is.Null);
 		}
 		
 		//===============================
@@ -41,35 +41,35 @@ namespace Specs.Oaz.SpecFlowHelpers.Moq
 		[Given(@"I have Stuff defined as following")]
 		public void GivenIHaveStuffDefinedAsFollowing (Table table)
 		{
-			Instance.Is (table.AsMock<Stuff> ());
+			Instance.Of<Stuff>().Is (table.AsMock<Stuff> ());
 		}
 
 		[Then(@"my Stuff values are as following")]
 		public void ThenMyStuffValuesAreAsFollowing (Table table)
 		{
-			Assert.That (Instance.Of<Stuff> (), Is.Not.Null);
-			Assert.That (Instance.Of<Stuff> (), Is.EqualTo (table.AsMock<Stuff> ()).Using (Properties.StrictComparison));
+			Assert.That (Instance.Of<Stuff> ().Object, Is.Not.Null);
+			Assert.That (Instance.Of<Stuff> ().Object, Is.EqualTo (table.AsMock<Stuff> ()).Using (Properties.StrictComparison));
 		}
 
 		[Then(@"my Stuff values are NOT as following")]
 		public void ThenMyStuffValuesAreNotAsFollowing (Table table)
 		{
-			Assert.That (Instance.Of<Stuff> (), Is.Not.Null);
-			Assert.That (Instance.Of<Stuff> (), Is.Not.EqualTo (table.AsMock<Stuff> ()).Using (Properties.StrictComparison));
+			Assert.That (Instance.Of<Stuff> ().Object, Is.Not.Null);
+			Assert.That (Instance.Of<Stuff> ().Object, Is.Not.EqualTo (table.AsMock<Stuff> ()).Using (Properties.StrictComparison));
 		}
 
 		[Then(@"my Stuff values contains the following")]
 		public void ThenMyStuffValuesContainsTheFollowing (Table table)
 		{
-			Assert.That (Instance.Of<Stuff> (), Is.Not.Null);
-			Assert.That (Instance.Of<Stuff> (), Is.EqualTo (table).Using (Properties.LooseComparison));
+			Assert.That (Instance.Of<Stuff> ().Object, Is.Not.Null);
+			Assert.That (Instance.Of<Stuff> ().Object, Is.EqualTo (table).Using (Properties.LooseComparison));
 		}
 
 		[Then(@"my Stuff values does NOT contain the following")]
 		public void ThenMyStuffValuesDoesNotContainTheFollowing (Table table)
 		{
-			Assert.That (Instance.Of<Stuff> (), Is.Not.Null);
-			Assert.That (Instance.Of<Stuff> (), Is.Not.EqualTo (table).Using (Properties.LooseComparison));
+			Assert.That (Instance.Of<Stuff> ().Object, Is.Not.Null);
+			Assert.That (Instance.Of<Stuff> ().Object, Is.Not.EqualTo (table).Using (Properties.LooseComparison));
 		}
 		
 		//===============================
@@ -77,55 +77,55 @@ namespace Specs.Oaz.SpecFlowHelpers.Moq
 		[Given(@"I have lots of Stuff defined as following")]
 		public void GivenIHaveLotsOfStuffDefinedAsFollowing (Table table)
 		{
-			Instance.Is (table.AsMockEnumerable<Stuff> ());
+			Instance.Of<IEnumerable<Stuff>> ().Is (table.AsMockEnumerable<Stuff> ());
 		}
 		
 		[Then(@"all my Stuff values are strictly equal to the following")]
 		public void ThenAllMyStuffValuesAreStrictlyEqualToFollowing (Table table)
 		{
-			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.EqualTo (table.AsMockEnumerable<Stuff> ()).Using (Properties.StrictComparison));
+			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.EqualTo (table.AsMockEnumerable<Stuff> ()).Using (Properties.StrictComparison));
 		}
 
 		[Then(@"all my Stuff values are NOT strictly equal to the following")]
 		public void ThenAllMyStuffValuesAreNotStrictlyEqualToFollowing (Table table)
 		{
-			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.Not.EqualTo (table.AsMockEnumerable<Stuff> ()).Using (Properties.StrictComparison));
+			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.Not.EqualTo (table.AsMockEnumerable<Stuff> ()).Using (Properties.StrictComparison));
 		}
 
 		[Then(@"all my Stuff values are strictly equivalent to the following")]
 		public void ThenAllMyStuffValuesAreStrictlyEquivalentToFollowing (Table table)
 		{
-			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.EquivalentTo (table.AsMockEnumerable<Stuff> ()).Using (Properties.StrictComparison));
+			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.EquivalentTo (table.AsMockEnumerable<Stuff> ()).Using (Properties.StrictComparison));
 		}
 
 		[Then(@"all my Stuff values are NOT strictly equivalent to the following")]
 		public void ThenAllMyStuffValuesAreNotStrictlyEquivalentToFollowing (Table table)
 		{
-			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.Not.EquivalentTo (table.AsMockEnumerable<Stuff> ()).Using (Properties.StrictComparison));
+			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.Not.EquivalentTo (table.AsMockEnumerable<Stuff> ()).Using (Properties.StrictComparison));
 		}
 
 		[Then(@"all my Stuff values are loosely equal to the following")]
 		public void ThenAllMyStuffValuesAreLooselyEqualToFollowing (Table table)
 		{
-			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.EqualTo (table.AsEnumerable()).Using (Properties.LooseComparison));
+			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.EqualTo (table.AsEnumerable()).Using (Properties.LooseComparison));
 		}
 
 		[Then(@"all my Stuff values are NOT loosely equal to the following")]
 		public void ThenAllMyStuffValuesAreNotLooselyEqualToFollowing (Table table)
 		{
-			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.Not.EqualTo (table.AsEnumerable()).Using (Properties.LooseComparison));
+			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.Not.EqualTo (table.AsEnumerable()).Using (Properties.LooseComparison));
 		}
 
 		[Then(@"all my Stuff values are loosely equivalent to the following")]
 		public void ThenAllMyStuffValuesAreLooselyEquivalentToFollowing (Table table)
 		{
-			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.EquivalentTo (table.AsEnumerable()).Using (Properties.LooseComparison));
+			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.EquivalentTo (table.AsEnumerable()).Using (Properties.LooseComparison));
 		}
 
 		[Then(@"all my Stuff values are NOT loosely equivalent to the following")]
 		public void ThenAllMyStuffValuesAreNotLooselyEquivalentToFollowing (Table table)
 		{
-			Assert.That (Instance.Of<IEnumerable<Stuff>> (), Is.Not.EquivalentTo (table.AsEnumerable()).Using (Properties.LooseComparison));
+			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.Not.EquivalentTo (table.AsEnumerable()).Using (Properties.LooseComparison));
 		}
 	}
 }

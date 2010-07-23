@@ -5,14 +5,14 @@ namespace Oaz.SpecFlowHelpers
 	{
 		public static U HandleExceptionInstance<U>(Func<U> execute) where U:class
 		{
-			Instance.Is<Exception>(null);
+			Instance.Of<Exception>().Is(null);
 			try
 			{
 				return execute();
 			}
 			catch(Exception e)
 			{
-				Instance.Is<Exception>(e);
+				Instance.Of<Exception>().Is(e);
 				return null;
 			}
 		}

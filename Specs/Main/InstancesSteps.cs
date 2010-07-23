@@ -25,19 +25,19 @@ namespace Specs.Oaz.SpecFlowHelpers
         [Given(@"I have a unique instance of Foo")]
         public void GivenIHaveAUniqueInstanceOfFoo()
         {
-			Instance.Is( new Foo() { Name="noname" } );
+			Instance.Of<Foo>().Is( new Foo() { Name="noname" } );
         }
 
         [Given(@"I have an instance of Foo named (.*)")]
         public void GivenIHaveAnInstanceOfFooNamed(string name)
         {
-			Instance.Named(name).Is( new Foo() { Name=name } );
+			Instance.Of<Foo>().Named(name).Is( new Foo() { Name=name } );
         }
 
         [Given(@"I have an instance of Bar named (.*)")]
         public void GivenIHaveAnInstanceOfBarNamed(string name)
         {
-			Instance.Named(name).Is( new Bar() { Name=name } );
+			Instance.Of<Bar>().Named(name).Is( new Bar() { Name=name } );
         }
 
         [When(@"I do nothing")]
@@ -48,31 +48,31 @@ namespace Specs.Oaz.SpecFlowHelpers
         [Then(@"I have the same unique instance of Foo")]
         public void ThenIHaveTheSameUniqueInstanceOfFoo()
         {
-            Assert.That( Instance.Of<Foo>().Name, Is.EqualTo("noname") );
+            Assert.That( Instance.Of<Foo>().Object.Name, Is.EqualTo("noname") );
         }
 
         [Then(@"I have the same instance of Foo named (.*)")]
         public void ThenIHaveTheSameInstanceOfFoo(string name)
         {
-            Assert.That( Instance.Named(name).Of<Foo>().Name, Is.EqualTo(name) );
+            Assert.That( Instance.Of<Foo>().Named(name).Object.Name, Is.EqualTo(name) );
         }
 
         [Then(@"I have the same instance of Bar named (.*)")]
         public void ThenIHaveTheSameInstanceOfBar(string name)
         {
-            Assert.That( Instance.Named(name).Of<Bar>().Name, Is.EqualTo(name) );
+            Assert.That( Instance.Of<Bar>().Named(name).Object.Name, Is.EqualTo(name) );
         }
 
         [Then(@"I do not have an instance of Foo named (.*)")]
         public void ThenDoNotHaveAnInstanceOfFoo(string name)
        	{
-            Assert.That( Instance.Named(name).Of<Foo>(), Is.Null );
+            Assert.That( Instance.Of<Foo>().Named(name).Object, Is.Null );
         }
 
         [Then(@"do not have an instance of FooBar named (.*) even if FooBar inherits from Foo")]
         public void ThenDoNotHaveAnInstanceOfFooBarNamedEvenIfFooBarInheritsFromFoo(string name)
        	{
-            Assert.That( Instance.Named(name).Of<FooBar>(), Is.Null );
+            Assert.That( Instance.Of<FooBar>().Named(name).Object, Is.Null );
         }
 	}
 }
