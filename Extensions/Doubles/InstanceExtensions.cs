@@ -8,14 +8,15 @@ namespace Oaz.SpecFlowHelpers.Doubles
 	{
 		public static InstanceHandler<T> IsVerifiable<T>(this InstanceHandler<T> ih) where T:class
 		{
-			var db = new Double<T>();
+			var db = new OutputDouble<T>();
 			ih.Is(db.Object);
 			return ih;
 		}
 
 		public static IEnumerable<Command<T>> Commands<T>(this InstanceHandler<T> ih) where T:class
 		{
-			return Double<T>.Get(ih.Object).Commands;
+			var outputDouble = Double<T>.Get(ih.Object) as OutputDouble<T>;
+			return outputDouble.Commands;
 		}
 	}
 }

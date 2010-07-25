@@ -46,11 +46,19 @@
     <Compile Include="Verification.feature.cs">
       <DependentUpon>Verification.feature</DependentUpon>
     </Compile>
+    <Compile Include="Input.feature.cs">
+      <DependentUpon>Input.feature</DependentUpon>
+    </Compile>
+    <Compile Include="InputSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Verification.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Verification.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Input.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Input.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
