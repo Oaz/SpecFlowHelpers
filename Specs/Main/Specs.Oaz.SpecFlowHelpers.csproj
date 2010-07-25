@@ -50,6 +50,8 @@
       <DependentUpon>Tables.feature</DependentUpon>
     </Compile>
     <Compile Include="TablesSteps.cs" />
+    <Compile Include="BasicTests.cs" />
+    <Compile Include="RegexSpike.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Instances.feature">

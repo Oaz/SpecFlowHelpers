@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 
-namespace Specs.Oaz.SpecFlowHelpers.Moq
+namespace Specs.Oaz.SpecFlowHelpers
 {
 	[TestFixture]
 	public class RegexSpike

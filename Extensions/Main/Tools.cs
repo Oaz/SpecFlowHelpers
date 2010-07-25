@@ -3,6 +3,19 @@ namespace Oaz.SpecFlowHelpers
 {
 	public static class Tools
 	{
+		public static void HandleExceptionInstance(Action execute)
+		{
+			Instance.Of<Exception>().Is(null);
+			try
+			{
+				execute();
+			}
+			catch(Exception e)
+			{
+				Instance.Of<Exception>().Is(e);
+			}
+		}
+		
 		public static U HandleExceptionInstance<U>(Func<U> execute) where U:class
 		{
 			Instance.Of<Exception>().Is(null);

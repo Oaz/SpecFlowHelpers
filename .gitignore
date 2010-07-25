@@ -1,0 +1,5 @@
+*.pidb
+*.feature.cs
+bin
+test-results
+*.userprefs

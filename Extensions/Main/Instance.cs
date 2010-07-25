@@ -21,14 +21,29 @@ namespace Oaz.SpecFlowHelpers
 			Name = defaultName;
 		}
 		
-		public void Is(T obj)
+		public InstanceHandler<T> Is(T obj)
 		{
 			ScenarioContext.Current[UniqueName()] = obj;
+			return this;
 		}
 		
 		public InstanceHandler<T> Named(string name)
 		{
 			return new InstanceHandler<T>() { Name = name };
+		}
+		
+		public InstanceHandler<T> SetData<U>(string key, U val)
+		{
+			ScenarioContext.Current[UniqueName(key)] = val;
+			return this;
+		}
+		
+		public U GetData<U>(string key)
+		{
+			var name = UniqueName(key);
+			if(!ScenarioContext.Current.ContainsKey(name))
+				return default(U);
+			return (U) ScenarioContext.Current[name];
 		}
 		
 		public T Object
@@ -50,6 +65,11 @@ namespace Oaz.SpecFlowHelpers
 		private string UniqueName()
 		{
 			return string.Format("{0}/{1}", typeof(T), Name);
+		}
+		
+		private string UniqueName(string key)
+		{
+			return string.Format("{0}/{1}/{2}", typeof(T), Name, key);
 		}
 	}
 }

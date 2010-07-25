@@ -43,6 +43,8 @@
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="ObjectProperties.cs" />
     <Compile Include="Tools.cs" />
+    <Compile Include="CommandLanguage.cs" />
+    <Compile Include="Command.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

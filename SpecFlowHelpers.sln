@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oaz.SpecFlowHelpers", "Exte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oaz.SpecFlowHelpers.Moq", "Extensions\Moq\Oaz.SpecFlowHelpers.Moq.csproj", "{B7A5141E-A364-4DFE-8E7C-1C6C670F1997}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oaz.SpecFlowHelpers.Doubles", "Extensions\Doubles\Oaz.SpecFlowHelpers.Doubles.csproj", "{672FA99E-E6BB-4EAF-984D-E3D6DD5717E8}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{39A44864-2A34-4335-BC8F-8E8B7ABE3D16}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Oaz.SpecFlowHelpers", "Samples\Main\Samples.Oaz.SpecFlowHelpers.csproj", "{5834AA57-BA2F-486B-880D-A8BD01445E37}"
@@ -18,11 +20,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{7766F1F3-4
 		Libs\Moq.dll = Libs\Moq.dll
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Castle", "Castle", "{E8E156B5-2935-4C27-B0B0-DD75D0FE37A0}"
+	ProjectSection(SolutionItems) = preProject
+		Libs\Castle\Castle.Core.dll = Libs\Castle\Castle.Core.dll
+		Libs\Castle\Castle.Core.xml = Libs\Castle\Castle.Core.xml
+		Libs\Castle\Castle.DynamicProxy2.dll = Libs\Castle\Castle.DynamicProxy2.dll
+		Libs\Castle\Castle.DynamicProxy2.xml = Libs\Castle\Castle.DynamicProxy2.xml
+	EndProjectSection
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specs", "Specs", "{96AAF423-825F-4D1C-946B-ADA37154F504}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specs.Oaz.SpecFlowHelpers", "Specs\Main\Specs.Oaz.SpecFlowHelpers.csproj", "{34D981B2-AAAF-4A24-8CB4-ED8EEEE80647}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specs.Oaz.SpecFlowHelpers.Moq", "Specs\Moq\Specs.Oaz.SpecFlowHelpers.Moq.csproj", "{F356441F-939D-4E89-BF47-018DE11A015E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specs.Oaz.SpecFlowHelpers.Doubles", "Specs\Doubles\Specs.Oaz.SpecFlowHelpers.Doubles.csproj", "{945B01FB-EE97-4DB6-B641-4C941D57A469}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +54,14 @@ Global
 		{623ADA46-6BE7-4D85-86EE-6A4534D8F226}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{623ADA46-6BE7-4D85-86EE-6A4534D8F226}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{623ADA46-6BE7-4D85-86EE-6A4534D8F226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{672FA99E-E6BB-4EAF-984D-E3D6DD5717E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{672FA99E-E6BB-4EAF-984D-E3D6DD5717E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{672FA99E-E6BB-4EAF-984D-E3D6DD5717E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{672FA99E-E6BB-4EAF-984D-E3D6DD5717E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{945B01FB-EE97-4DB6-B641-4C941D57A469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{945B01FB-EE97-4DB6-B641-4C941D57A469}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{945B01FB-EE97-4DB6-B641-4C941D57A469}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{945B01FB-EE97-4DB6-B641-4C941D57A469}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B7A5141E-A364-4DFE-8E7C-1C6C670F1997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B7A5141E-A364-4DFE-8E7C-1C6C670F1997}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7A5141E-A364-4DFE-8E7C-1C6C670F1997}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -54,9 +74,12 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{623ADA46-6BE7-4D85-86EE-6A4534D8F226} = {4A4B306F-FE89-4230-85A9-4C3FA0E57883}
 		{B7A5141E-A364-4DFE-8E7C-1C6C670F1997} = {4A4B306F-FE89-4230-85A9-4C3FA0E57883}
+		{672FA99E-E6BB-4EAF-984D-E3D6DD5717E8} = {4A4B306F-FE89-4230-85A9-4C3FA0E57883}
 		{5834AA57-BA2F-486B-880D-A8BD01445E37} = {39A44864-2A34-4335-BC8F-8E8B7ABE3D16}
+		{E8E156B5-2935-4C27-B0B0-DD75D0FE37A0} = {7766F1F3-4546-498C-9DF8-5A6759872657}
 		{34D981B2-AAAF-4A24-8CB4-ED8EEEE80647} = {96AAF423-825F-4D1C-946B-ADA37154F504}
 		{F356441F-939D-4E89-BF47-018DE11A015E} = {96AAF423-825F-4D1C-946B-ADA37154F504}
+		{945B01FB-EE97-4DB6-B641-4C941D57A469} = {96AAF423-825F-4D1C-946B-ADA37154F504}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Extensions\Main\Oaz.SpecFlowHelpers.csproj
