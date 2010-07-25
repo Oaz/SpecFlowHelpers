@@ -27,8 +27,16 @@ namespace Oaz.SpecFlowHelpers
 		private IEnumerable Parameters(MethodInfo method, string text)
 		{
 			var matches = ParameterRegex.Matches( text );
+			var paramsDefinition = method.GetParameters();
+			var i = 0;
 			foreach(Match match in matches)
-				yield return MatchValue(match);
+			{
+				var val = MatchValue(match);
+				if( i >= paramsDefinition.Length )
+					yield return val;
+				var typedValue = Convert.ChangeType(val, paramsDefinition[i++].ParameterType);
+				yield return typedValue;
+			}
 		}
 		
 		private static string MatchValue(Match m)

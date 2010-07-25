@@ -13,6 +13,7 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
 	public interface Receiver
 	{
 		void DoSomething(string name);
+		void PutTwoNumbers(int n1, int n2);
 	}
 	
 	[Binding]
@@ -31,7 +32,13 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
         {
             Instance.Of<Receiver>().Object.DoSomething(name);
         }
-
+		
+        [When(@"I put two numbers \[([0-9]+),([0-9]+)]")]
+        public void WhenIPutTwoNumbers(int n1, int n2)
+        {
+            Instance.Of<Receiver>().Object.PutTwoNumbers(n1,n2);
+        }
+		
         [Then(@"the receiver got in '(.*)' syntax the following commands")]
         public void ThenTheReceiverGotTheFollowingCommands(string syntax, Table table)
         {
