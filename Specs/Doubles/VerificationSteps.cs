@@ -39,16 +39,22 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
             Instance.Of<Receiver>().Object.PutTwoNumbers(n1,n2);
         }
 		
-        [Then(@"the receiver got in '(.*)' syntax the following commands")]
+        private static CommandSyntax GetSyntax (string syntaxName)
+		{
+			var syntaxProperty = With.Syntax.GetType().GetProperty(syntaxName);
+			return syntaxProperty.GetValue(With.Syntax, null) as CommandSyntax;
+		}
+
+        [Then(@"the receiver got in (.*) syntax the following commands")]
         public void ThenTheReceiverGotTheFollowingCommands(string syntax, Table table)
         {
- 			Assert.That (Instance.Of<Receiver> ().Commands(), Is.EqualTo (table.AsCommands<Receiver> (new CommandLanguage())));
+ 			Assert.That (Instance.Of<Receiver> ().Commands(), Is.EqualTo (table.AsCommands<Receiver> (GetSyntax (syntax))));
         }
 
-        [Then(@"the receiver did not get in '(.*)' syntax the following commands")]
+        [Then(@"the receiver did not get in (.*) syntax the following commands")]
         public void ThenTheReceiverDidNotGetTheFollowingCommands(string syntax, Table table)
         {
- 			Assert.That (Instance.Of<Receiver> ().Commands(), Is.Not.EqualTo (table.AsCommands<Receiver> (new CommandLanguage())));
+ 			Assert.That (Instance.Of<Receiver> ().Commands(), Is.Not.EqualTo (table.AsCommands<Receiver> (GetSyntax (syntax))));
         }
 	}
 }

@@ -38,7 +38,7 @@ namespace Oaz.SpecFlowHelpers.Doubles
 			}
 		}
 		
-		public static IEnumerable<Command<T>> AsCommands<T>(this Table table, CommandLanguage language) where T:class
+		public static IEnumerable<Command<T>> AsCommands<T>(this Table table, CommandSyntax language) where T:class
 		{
 			return Tools.HandleExceptionInstance(
 			  () =>
@@ -48,7 +48,7 @@ namespace Oaz.SpecFlowHelpers.Doubles
 			);
 		}
 		
-		private static IEnumerable<Command<T>> AsCommandsImpl<T>(Table table, CommandLanguage language) where T:class
+		private static IEnumerable<Command<T>> AsCommandsImpl<T>(Table table, CommandSyntax language) where T:class
 		{
 			foreach(var row in table.Rows)
 				yield return language.Command<T>(row[0]);

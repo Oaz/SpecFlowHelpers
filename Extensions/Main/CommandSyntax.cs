@@ -6,21 +6,21 @@ using System.Linq;
 
 namespace Oaz.SpecFlowHelpers
 {
-	public class CommandLanguage
+	public class CommandSyntax
 	{
-		public CommandLanguage ()
+		public CommandSyntax ()
 		{
-			MethodRegex = new Regex("^(.*?) [\"0-9]");
-			ParameterRegex = new Regex(" (\"(.*?)\"|[0-9]+)");
+			MethodNameBuilder = s=>s;
 		}
 		
 		public Regex MethodRegex {get;set;}
 		public Regex ParameterRegex {get;set;}
+		public Func<string,string> MethodNameBuilder {get;set;}
 		
 		public Command<T> Command<T>(string text)
 		{
 			var match = MethodRegex.Match( text );
-			var method = typeof(T).GetMethod(MatchValue(match).AsMethodName());
+			var method = typeof(T).GetMethod( MethodNameBuilder(MatchValue(match)) );
 			return new Command<T>(method, Parameters(method,text));
 		}
 		
