@@ -20,6 +20,24 @@ namespace Oaz.SpecFlowHelpers.Doubles
 			);
 		}
 		
+		public static IEnumerable<T> AsDoubleEnumerable<T>(this Table table) where T:class
+		{
+			return Tools.HandleExceptionInstance(
+			  () => AsDoubleEnumerableImpl<T>(table)
+			);
+		}
+		
+		private static IEnumerable<T> AsDoubleEnumerableImpl<T>(Table table) where T:class
+		{
+			foreach(var row in table.Rows)
+			{
+				var db = new InputDouble<T>();
+				foreach(var field in table.Header)
+					db.SetupGet(field, row[field]);
+				yield return db.Object;
+			}
+		}
+		
 		public static IEnumerable<Command<T>> AsCommands<T>(this Table table, CommandLanguage language) where T:class
 		{
 			return Tools.HandleExceptionInstance(
