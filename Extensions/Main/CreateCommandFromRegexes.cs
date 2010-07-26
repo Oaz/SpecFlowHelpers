@@ -3,12 +3,13 @@ using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Collections;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Oaz.SpecFlowHelpers
 {
-	public class CommandSyntax
+	public class CreateCommandFromRegexes : ICreateCommands
 	{
-		public CommandSyntax ()
+		public CreateCommandFromRegexes ()
 		{
 			MethodNameBuilder = s=>s;
 		}
@@ -24,7 +25,7 @@ namespace Oaz.SpecFlowHelpers
 			return new Command<T>(method, Parameters(method,text));
 		}
 		
-		private IEnumerable Parameters(MethodInfo method, string text)
+		private IEnumerable<object> Parameters(MethodInfo method, string text)
 		{
 			var matches = ParameterRegex.Matches( text );
 			var paramsDefinition = method.GetParameters();

@@ -38,20 +38,20 @@ namespace Oaz.SpecFlowHelpers.Doubles
 			}
 		}
 		
-		public static IEnumerable<Command<T>> AsCommands<T>(this Table table, CommandSyntax language) where T:class
+		public static IEnumerable<Command<T>> AsCommands<T>(this Table table, ICreateCommands cmdBuilder) where T:class
 		{
 			return Tools.HandleExceptionInstance(
 			  () =>
 			  {
-				return AsCommandsImpl<T>(table,language);
+				return AsCommandsImpl<T>(table,cmdBuilder);
 			  }
 			);
 		}
 		
-		private static IEnumerable<Command<T>> AsCommandsImpl<T>(Table table, CommandSyntax language) where T:class
+		private static IEnumerable<Command<T>> AsCommandsImpl<T>(Table table, ICreateCommands cmdBuilder) where T:class
 		{
 			foreach(var row in table.Rows)
-				yield return language.Command<T>(row[0]);
+				yield return cmdBuilder.Command<T>(row[0]);
 		}
 	}
 }

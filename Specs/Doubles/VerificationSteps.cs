@@ -39,10 +39,10 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
             Instance.Of<Receiver>().Object.PutTwoNumbers(n1,n2);
         }
 		
-        private static CommandSyntax GetSyntax (string syntaxName)
+        private static ICreateCommands GetSyntax (string syntaxName)
 		{
 			var syntaxProperty = With.Syntax.GetType().GetProperty(syntaxName);
-			return syntaxProperty.GetValue(With.Syntax, null) as CommandSyntax;
+			return syntaxProperty.GetValue(With.Syntax, null) as ICreateCommands;
 		}
 
         [Then(@"the receiver got in (.*) syntax the following commands")]

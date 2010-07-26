@@ -18,14 +18,14 @@ namespace Oaz.SpecFlowHelpers
 	{
 		public SyntaxFactory ()
 		{
-			Natural = new CommandSyntax ()
+			Natural = new CreateCommandFromRegexes ()
 			{
 				MethodRegex = new Regex("^(.*?) [\"0-9]"),
 				ParameterRegex = new Regex(" (\"(.*?)\"|[0-9]+)"),
 				MethodNameBuilder = s=>s.AsMethodName()
 			};
 			
-			Functions = new CommandSyntax ()
+			Functions = new CreateCommandFromRegexes ()
 			{
 				MethodRegex = new Regex("(.*)\\("),
 				ParameterRegex = new Regex("[,\\(]([^,\\)]*)")
@@ -33,8 +33,8 @@ namespace Oaz.SpecFlowHelpers
 
 		}
 
-		public CommandSyntax Natural { get; private set; }
-		public CommandSyntax Functions { get; private set; }
+		public ICreateCommands Natural { get; private set; }
+		public ICreateCommands Functions { get; private set; }
 	}
 }
 

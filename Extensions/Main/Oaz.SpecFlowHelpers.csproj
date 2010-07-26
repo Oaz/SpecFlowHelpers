@@ -44,8 +44,9 @@
     <Compile Include="ObjectProperties.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="Command.cs" />
-    <Compile Include="CommandSyntax.cs" />
     <Compile Include="With.cs" />
+    <Compile Include="CreateCommandFromRegexes.cs" />
+    <Compile Include="ICreateCommands.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
