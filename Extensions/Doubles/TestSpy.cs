@@ -4,9 +4,9 @@ using Castle.Core.Interceptor;
 using System.Linq;
 namespace Oaz.SpecFlowHelpers.Doubles
 {
-	public class OutputDouble<T> : Double<T> where T:class
+	public class TestSpy<T> : TestDouble<T> where T:class
 	{
-		public OutputDouble ()
+		public TestSpy ()
 		{
 			Commands = new List<Command<T>>();
 		}

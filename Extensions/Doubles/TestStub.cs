@@ -3,9 +3,9 @@ using Castle.Core.Interceptor;
 using System.Collections.Generic;
 namespace Oaz.SpecFlowHelpers.Doubles
 {
-	public class InputDouble<T> : Double<T> where T:class
+	public class TestStub<T> : TestDouble<T> where T:class
 	{
-		public InputDouble ()
+		public TestStub ()
 		{
 			_returnValues = new Dictionary<string, object>();
 		}

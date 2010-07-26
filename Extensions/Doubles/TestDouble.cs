@@ -6,16 +6,16 @@ using System.Collections.Generic;
 
 namespace Oaz.SpecFlowHelpers.Doubles
 {
-	public class DoubleProxy<T> where T:class
+	internal class DoubleProxy<T> where T:class
 	{
-		internal Double<T> Double { get; set; }
+		internal TestDouble<T> Double { get; set; }
 	}
 	
-	public abstract class Double<T> : IInterceptor where T:class
+	public abstract class TestDouble<T> : IInterceptor where T:class
 	{
 		private static readonly ProxyGenerator _generator = new ProxyGenerator();
 
-		public Double()
+		public TestDouble()
 		{
 			var options = new ProxyGenerationOptions();
 			options.BaseTypeForInterfaceProxy = typeof(DoubleProxy<T>);
@@ -28,7 +28,7 @@ namespace Oaz.SpecFlowHelpers.Doubles
 		internal DoubleProxy<T> Proxy { get; private set; }
 		public T Object { get; private set; }
 	
-		public static Double<T> Get(T obj)
+		public static TestDouble<T> Get(T obj)
 		{
 			var proxy = (DoubleProxy<T>) (object) obj;
 			return proxy.Double;

@@ -19,10 +19,10 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
 	[Binding]
 	public class VerificationSteps
 	{
-        [Given(@"a verifiable receiver")]
+        [Given(@"a spy receiver")]
         public void GivenAVerifiableReceiver()
         {
-            Instance.Of<Receiver>().IsVerifiable();
+            Instance.Of<Receiver>().IsSpy();
 			Assert.That( Instance.Of<Receiver>().Object, Is.Not.Null, "No instance of receiver created" );
 			Assert.That( Instance.Of<Exception>().Object, Is.Null );
         }

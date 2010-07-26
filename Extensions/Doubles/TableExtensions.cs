@@ -7,34 +7,34 @@ namespace Oaz.SpecFlowHelpers.Doubles
 {
 	public static class TableExtensions
 	{
-		public static T AsDouble<T>(this Table table) where T:class
+		public static T AsStub<T>(this Table table) where T:class
 		{
 			return Tools.HandleExceptionInstance(
 			  () =>
 			  {
-				var db = new InputDouble<T>();
+				var stub = new TestStub<T>();
 				foreach(var row in table.Rows)
-					db.SetupGet(row[0], row[1]);
-				return db.Object;
+					stub.SetupGet(row[0], row[1]);
+				return stub.Object;
 			  }
 			);
 		}
 		
-		public static IEnumerable<T> AsDoubleEnumerable<T>(this Table table) where T:class
+		public static IEnumerable<T> AsStubEnumerable<T>(this Table table) where T:class
 		{
 			return Tools.HandleExceptionInstance(
-			  () => AsDoubleEnumerableImpl<T>(table)
+			  () => AsStubEnumerableImpl<T>(table)
 			);
 		}
 		
-		private static IEnumerable<T> AsDoubleEnumerableImpl<T>(Table table) where T:class
+		private static IEnumerable<T> AsStubEnumerableImpl<T>(Table table) where T:class
 		{
 			foreach(var row in table.Rows)
 			{
-				var db = new InputDouble<T>();
+				var stub = new TestStub<T>();
 				foreach(var field in table.Header)
-					db.SetupGet(field, row[field]);
-				yield return db.Object;
+					stub.SetupGet(field, row[field]);
+				yield return stub.Object;
 			}
 		}
 		

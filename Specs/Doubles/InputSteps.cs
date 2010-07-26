@@ -42,21 +42,21 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
 		[Given(@"I have Stuff defined as following")]
 		public void GivenIHaveStuffDefinedAsFollowing (Table table)
 		{
-			Instance.Of<Stuff>().Is (table.AsDouble<Stuff> ());
+			Instance.Of<Stuff>().Is (table.AsStub<Stuff> ());
 		}
 
 		[Then(@"my Stuff values are as following")]
 		public void ThenMyStuffValuesAreAsFollowing (Table table)
 		{
 			Assert.That (Instance.Of<Stuff> ().Object, Is.Not.Null);
-			Assert.That (Instance.Of<Stuff> ().Object, Is.EqualTo (table.AsDouble<Stuff> ()).Using (Properties.StrictComparison));
+			Assert.That (Instance.Of<Stuff> ().Object, Is.EqualTo (table.AsStub<Stuff> ()).Using (Properties.StrictComparison));
 		}
 		
 		[Then(@"my Stuff values are NOT as following")]
 		public void ThenMyStuffValuesAreNotAsFollowing (Table table)
 		{
 			Assert.That (Instance.Of<Stuff> ().Object, Is.Not.Null);
-			Assert.That (Instance.Of<Stuff> ().Object, Is.Not.EqualTo (table.AsDouble<Stuff> ()).Using (Properties.StrictComparison));
+			Assert.That (Instance.Of<Stuff> ().Object, Is.Not.EqualTo (table.AsStub<Stuff> ()).Using (Properties.StrictComparison));
 		}
 
 		[Then(@"my Stuff values contains the following")]
@@ -78,31 +78,31 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
 		[Given(@"I have lots of Stuff defined as following")]
 		public void GivenIHaveLotsOfStuffDefinedAsFollowing (Table table)
 		{
-			Instance.Of<IEnumerable<Stuff>> ().Is (table.AsDoubleEnumerable<Stuff> ());
+			Instance.Of<IEnumerable<Stuff>> ().Is (table.AsStubEnumerable<Stuff> ());
 		}
 		
 		[Then(@"all my Stuff values are strictly equal to the following")]
 		public void ThenAllMyStuffValuesAreStrictlyEqualToFollowing (Table table)
 		{
-			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.EqualTo (table.AsDoubleEnumerable<Stuff> ()).Using (Properties.StrictComparison));
+			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.EqualTo (table.AsStubEnumerable<Stuff> ()).Using (Properties.StrictComparison));
 		}
 
 		[Then(@"all my Stuff values are NOT strictly equal to the following")]
 		public void ThenAllMyStuffValuesAreNotStrictlyEqualToFollowing (Table table)
 		{
-			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.Not.EqualTo (table.AsDoubleEnumerable<Stuff> ()).Using (Properties.StrictComparison));
+			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.Not.EqualTo (table.AsStubEnumerable<Stuff> ()).Using (Properties.StrictComparison));
 		}
 
 		[Then(@"all my Stuff values are strictly equivalent to the following")]
 		public void ThenAllMyStuffValuesAreStrictlyEquivalentToFollowing (Table table)
 		{
-			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.EquivalentTo (table.AsDoubleEnumerable<Stuff> ()).Using (Properties.StrictComparison));
+			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.EquivalentTo (table.AsStubEnumerable<Stuff> ()).Using (Properties.StrictComparison));
 		}
 
 		[Then(@"all my Stuff values are NOT strictly equivalent to the following")]
 		public void ThenAllMyStuffValuesAreNotStrictlyEquivalentToFollowing (Table table)
 		{
-			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.Not.EquivalentTo (table.AsDoubleEnumerable<Stuff> ()).Using (Properties.StrictComparison));
+			Assert.That (Instance.Of<IEnumerable<Stuff>> ().Object, Is.Not.EquivalentTo (table.AsStubEnumerable<Stuff> ()).Using (Properties.StrictComparison));
 		}
 
 		[Then(@"all my Stuff values are loosely equal to the following")]

@@ -48,9 +48,9 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="InstanceExtensions.cs" />
     <Compile Include="TableExtensions.cs" />
-    <Compile Include="Double.cs" />
-    <Compile Include="OutputDouble.cs" />
-    <Compile Include="InputDouble.cs" />
+    <Compile Include="TestDouble.cs" />
+    <Compile Include="TestSpy.cs" />
+    <Compile Include="TestStub.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Main\Oaz.SpecFlowHelpers.csproj">
