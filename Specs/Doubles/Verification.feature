@@ -39,3 +39,32 @@ Scenario: Verification with multiple syntaxes
 	Then the receiver got in Functions syntax the following commands
 	 | Commands                                |
 	 | PutTwoNumbers(26,478)                   |
+
+Scenario: Verification with list of commands
+	Given a verifiable receiver
+	When I do something with name 'name1'
+	And I put two numbers [333,1]
+	And I do something with name 'name2'
+	And I put two numbers [8,44]
+	Then the receiver got in Natural syntax the following commands
+	 | Commands                                |
+	 | do something "name1"                    |
+	 | put two numbers 333 1                   |
+	 | do something "name2"                    |
+	 | put two numbers 8 44                    |
+	And the receiver did not get in Natural syntax the following commands
+	 | Commands                                |
+	 | put two numbers 333 1                   |
+	 | do something "name1"                    |
+	 | do something "name2"                    |
+	 | put two numbers 8 44                    |
+	And the receiver did not get in Natural syntax the following commands
+	 | Commands                                |
+	 | do something "name1"                    |
+	 | do something "name2"                    |
+	 | put two numbers 8 44                    |
+	And the receiver did not get in Natural syntax the following commands
+	 | Commands                                |
+	 | do something "name1"                    |
+	 | put two numbers 333 1                   |
+	 | do something "name2"                    |
