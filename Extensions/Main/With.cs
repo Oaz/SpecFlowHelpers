@@ -22,13 +22,17 @@ namespace Oaz.SpecFlowHelpers
 			{
 				MethodRegex = new Regex("^(.*?) [\"0-9]"),
 				ParameterRegex = new Regex(" (\"(.*?)\"|[0-9]+)"),
+				ParameterDelta = 1,
+				ReturnsRegex = new Regex("=> (.*)"),
 				MethodNameBuilder = s=>s.AsMethodName()
 			};
 			
 			Functions = new CreateCommandFromRegexes ()
 			{
 				MethodRegex = new Regex("(.*)\\("),
-				ParameterRegex = new Regex("[,\\(]([^,\\)]*)")
+				ParameterRegex = new Regex("[,\\(]([^,\\)]*)"),
+				ParameterDelta = 0,
+				ReturnsRegex = new Regex("=(.*)")
 			};
 
 		}

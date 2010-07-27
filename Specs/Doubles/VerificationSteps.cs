@@ -14,15 +14,31 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
 	{
 		void DoSomething(string name);
 		void PutTwoNumbers(int n1, int n2);
+		int ComputeTheMagicNumberFrom(int val);
 	}
 	
 	[Binding]
 	public class VerificationSteps
 	{
-        [Given(@"a spy receiver")]
+		[Then(@"I get an exception: (.*)")]
+		public void ThenIGetAnException (string message)
+		{
+			Assert.That (Instance.Of<Exception> ().Object, Is.Not.Null);
+			Assert.That (Instance.Of<Exception> ().Object.Message, Contains.Substring (message));
+		}
+		
+        [Given(@"a spy receiver without behaviour")]
         public void GivenAVerifiableReceiver()
         {
             Instance.Of<Receiver>().IsSpy();
+			Assert.That( Instance.Of<Receiver>().Object, Is.Not.Null, "No instance of receiver created" );
+			Assert.That( Instance.Of<Exception>().Object, Is.Null );
+        }
+		
+        [Given(@"a spy receiver with the following behaviour")]
+        public void GivenTheSpyReceiverImplementsTheFollowingBehaviour(Table table)
+        {
+            Instance.Of<Receiver>().IsSpy( table.AsSpyBehaviour<Receiver>(With.Syntax.Natural) );
 			Assert.That( Instance.Of<Receiver>().Object, Is.Not.Null, "No instance of receiver created" );
 			Assert.That( Instance.Of<Exception>().Object, Is.Null );
         }
@@ -37,6 +53,13 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
         public void WhenIPutTwoNumbers(int n1, int n2)
         {
             Instance.Of<Receiver>().Object.PutTwoNumbers(n1,n2);
+        }
+		
+        [When(@"I compute the magic number from ([0-9]+) and put both numbers")]
+        public void WhenIComputeTheMagicNumberFromAndPutBothNumbers(int val)
+        {
+            int magic = Instance.Of<Receiver>().Object.ComputeTheMagicNumberFrom(val);
+            Instance.Of<Receiver>().Object.PutTwoNumbers(val,magic);
         }
 		
         private static ICreateCommands GetSyntax (string syntaxName)

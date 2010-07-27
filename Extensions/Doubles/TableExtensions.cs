@@ -43,7 +43,7 @@ namespace Oaz.SpecFlowHelpers.Doubles
 			return Tools.HandleExceptionInstance(
 			  () =>
 			  {
-				return AsCommandsImpl<T>(table,cmdBuilder);
+				return AsCommandsImpl<T>(table,cmdBuilder).ToArray().AsEnumerable();
 			  }
 			);
 		}
@@ -53,6 +53,30 @@ namespace Oaz.SpecFlowHelpers.Doubles
 			foreach(var row in table.Rows)
 				yield return cmdBuilder.Command<T>(row[0]);
 		}
+
+		public static Func<Command<T>,object> AsSpyBehaviour<T>(this Table table, ICreateCommands cmdBuilder) where T:class
+		{
+			return Tools.HandleExceptionInstance(
+			  () =>
+			  {
+				return AsSpyBehaviourImpl<T>(table,cmdBuilder);
+			  }
+			);
+		}
+
+		private static Func<Command<T>,object> AsSpyBehaviourImpl<T>( Table table, ICreateCommands cmdBuilder) where T:class
+		{
+			var cmds = AsCommandsImpl<T>(table, cmdBuilder).ToList();
+			return cmd =>
+			{
+				var foundCmd = cmds.Find( c => c.Equals(cmd) );
+				if( foundCmd == null )
+					return null;
+				else
+					return foundCmd.Returns;
+			};
+		}
+
 	}
 }
 

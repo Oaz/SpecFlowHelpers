@@ -52,6 +52,7 @@
     <Compile Include="TablesSteps.cs" />
     <Compile Include="BasicTests.cs" />
     <Compile Include="RegexSpike.cs" />
+    <Compile Include="Syntaxes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Instances.feature">

@@ -12,11 +12,20 @@ namespace Oaz.SpecFlowHelpers
 		public Command (MethodInfo method, IEnumerable<object> parameters)
 		{
 			Method = method;
-			Parameters = parameters;
+			Parameters = parameters.ToList();
+			Returns = null;
+		}
+		
+		public Command (MethodInfo method, IEnumerable<object> parameters, object returns)
+		{
+			Method = method;
+			Parameters = parameters.ToList();
+			Returns = returns;
 		}
 
 		public MethodInfo Method {get;private set;}
-		public IEnumerable<object> Parameters {get;private set;}
+		public IList<object> Parameters {get;private set;}
+		public object Returns {get;private set;}
 		
 		public override bool Equals (object obj)
 		{
@@ -27,6 +36,16 @@ namespace Oaz.SpecFlowHelpers
 		public override int GetHashCode ()
 		{
 			return base.GetHashCode ();
+		}
+		
+		public override string ToString ()
+		{
+			return string.Format (
+			  "[Command: Method={0}, Parameters={1}, Returns={2}]",
+			  Method,
+			  string.Join("|",Parameters.Select(p=>p.ToString()).ToArray()),
+			  Returns
+			);
 		}
 	}
 }

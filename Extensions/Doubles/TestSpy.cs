@@ -9,14 +9,22 @@ namespace Oaz.SpecFlowHelpers.Doubles
 		public TestSpy ()
 		{
 			Commands = new List<Command<T>>();
+			Behaviour = null;
 		}
 		
 		public IList<Command<T>> Commands { get; private set; }
+		public Func<Command<T>,object> Behaviour {get; internal set;}
 
 		protected override void Execute (IInvocation invocation)
 		{
 			var cmd = new Command<T>(invocation.Method, invocation.Arguments.AsEnumerable());
 			Commands.Add(cmd);
+			if(Behaviour != null)
+			{
+				var returnValue = Behaviour(cmd);
+				if( cmd.Method.ReturnType != typeof(void) )
+					invocation.ReturnValue = returnValue;
+			}
 		}
 	}
 }
