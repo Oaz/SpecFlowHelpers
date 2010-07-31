@@ -66,13 +66,13 @@ namespace Specs.Oaz.SpecFlowHelpers
         [Then(@"I do not have an instance of Foo named (.*)")]
         public void ThenDoNotHaveAnInstanceOfFoo(string name)
        	{
-            Assert.That( Instance.Of<Foo>().Named(name).Object, Is.Null );
+            Assert.False( Instance.Of<Foo>().Named(name).Exists );
         }
 
         [Then(@"do not have an instance of FooBar named (.*) even if FooBar inherits from Foo")]
         public void ThenDoNotHaveAnInstanceOfFooBarNamedEvenIfFooBarInheritsFromFoo(string name)
        	{
-            Assert.That( Instance.Of<FooBar>().Named(name).Object, Is.Null );
+            Assert.False( Instance.Of<FooBar>().Named(name).Exists );
         }
 	}
 }

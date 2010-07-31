@@ -27,14 +27,14 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
 		[Then(@"I get an exception '(.*)'")]
 		public void ThenIGetAnException (string message)
 		{
-			Assert.That (Instance.Of<Exception> ().Object, Is.Not.Null);
+			Assert.True (Instance.Of<Exception> ().Exists);
 			Assert.That (Instance.Of<Exception> ().Object.Message, Contains.Substring (message));
 		}
 
 		[Then(@"I do not get any exception")]
 		public void ThenIDoNotGetAnException ()
 		{
-			Assert.That (Instance.Of<Exception> ().Object, Is.Null);
+			Assert.False (Instance.Of<Exception> ().Exists);
 		}
 		
 		//===============================

@@ -23,8 +23,14 @@ namespace Oaz.SpecFlowHelpers
 		
 		public InstanceHandler<T> Is(T obj)
 		{
+			Tools.Check( !Exists, "{0} is already defined", ToString() );
 			ScenarioContext.Current[UniqueName()] = obj;
 			return this;
+		}
+		
+		public void Clear()
+		{
+			ScenarioContext.Current.Remove(UniqueName());
 		}
 		
 		public InstanceHandler<T> Named(string name)
@@ -32,18 +38,12 @@ namespace Oaz.SpecFlowHelpers
 			return new InstanceHandler<T>() { Name = name };
 		}
 		
-		public InstanceHandler<T> SetData<U>(string key, U val)
+		public bool Exists
 		{
-			ScenarioContext.Current[UniqueName(key)] = val;
-			return this;
-		}
-		
-		public U GetData<U>(string key)
-		{
-			var name = UniqueName(key);
-			if(!ScenarioContext.Current.ContainsKey(name))
-				return default(U);
-			return (U) ScenarioContext.Current[name];
+			get
+			{
+				return ScenarioContext.Current.ContainsKey(UniqueName());
+			}
 		}
 		
 		public T Object
@@ -51,8 +51,7 @@ namespace Oaz.SpecFlowHelpers
 			get
 			{
 				var name = UniqueName();
-				if(!ScenarioContext.Current.ContainsKey(name))
-					return null;
+				Tools.Check( ScenarioContext.Current.ContainsKey(name), "{0} is not defined", ToString() );
 				return ScenarioContext.Current[name] as T;
 			}
 		}
@@ -67,10 +66,17 @@ namespace Oaz.SpecFlowHelpers
 			return string.Format("{0}/{1}", typeof(T), Name);
 		}
 		
-		private string UniqueName(string key)
+		public override string ToString ()
 		{
-			return string.Format("{0}/{1}/{2}", typeof(T), Name, key);
+			var naming = (Name == defaultName) ? "" : " named " + Name;
+			if( !Exists )
+				return string.Format ("empty instance{1} of {0}", typeof(T), naming);
+			var obj = ScenarioContext.Current[UniqueName()];
+			if( obj==null )
+				return string.Format ("null instance{1} of {0}", typeof(T), naming);
+			return string.Format ("instance{1} of {0} {2}", typeof(T), naming, obj);
 		}
+
 	}
 }
 

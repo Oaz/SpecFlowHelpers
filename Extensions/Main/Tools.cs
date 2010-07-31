@@ -5,7 +5,7 @@ namespace Oaz.SpecFlowHelpers
 	{
 		public static void HandleExceptionInstance(Action execute)
 		{
-			Instance.Of<Exception>().Is(null);
+			Instance.Of<Exception>().Clear();
 			try
 			{
 				execute();
@@ -18,7 +18,7 @@ namespace Oaz.SpecFlowHelpers
 		
 		public static U HandleExceptionInstance<U>(Func<U> execute) where U:class
 		{
-			Instance.Of<Exception>().Is(null);
+			Instance.Of<Exception>().Clear();
 			try
 			{
 				return execute();
