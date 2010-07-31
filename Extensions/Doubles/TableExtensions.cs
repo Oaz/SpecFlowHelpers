@@ -35,23 +35,16 @@ namespace Oaz.SpecFlowHelpers.Doubles
 			return Tools.HandleExceptionInstance(
 			  () =>
 			  {
-				return AsPropertiesBehaviourImpl<T>(table.ValuePairs());
+				return AsPropertiesBehaviourImpl<T>(table.AsPropertiesDictionary<T>());
 			  }
 			);
 		}
 
-		private static Func<Command<T>,object> AsPropertiesBehaviourImpl<T>( this IEnumerable<KeyValuePair<string,string>> values ) where T:class
+		private static Func<Command<T>,object> AsPropertiesBehaviourImpl<T>( this IDictionary<string,object> values ) where T:class
 		{
 			var propertyValues = new Dictionary<string,object>();
 			foreach(var pair in values)
-			{
-				var propertyName = pair.Key;
-				var property = typeof(T).GetProperty(propertyName);
-				Tools.Check( property != null, "Unknown property {0} on type {1}", propertyName, typeof(T) );
-				var propertyValue = pair.Value;
-				var typedValue = Convert.ChangeType(propertyValue, property.PropertyType);
-				propertyValues["get_"+propertyName] = typedValue;
-			}
+				propertyValues["get_"+pair.Key] = pair.Value;
 			return cmd =>
 			{
 				if( !propertyValues.ContainsKey(cmd.Method.Name) )
@@ -87,7 +80,7 @@ namespace Oaz.SpecFlowHelpers.Doubles
 			foreach(var row in table.Rows)
 			{
 				var stub = new TestDouble<T>();
-				stub.Behaviour = row.Values().AsPropertiesBehaviourImpl<T>();
+				stub.Behaviour = row.AsPropertiesDictionary<T>().AsPropertiesBehaviourImpl<T>();
 				yield return stub.Object;
 			}
 		}

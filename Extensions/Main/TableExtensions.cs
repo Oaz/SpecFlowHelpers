@@ -19,10 +19,35 @@ namespace Oaz.SpecFlowHelpers
 				yield return new KeyValuePair<string, string>(row[0], row[1]);
 		}
 		
+		public static IDictionary<string,object> AsPropertiesDictionary<T>(this Table table)
+		{
+			return table.ValuePairs().PropertiesDictionary<T>();
+		}
+		
 		internal static IEnumerable<KeyValuePair<string,string>> Values(this TableRow row)
 		{
 			foreach(var cell in row)
 				yield return cell;
+		}
+		
+		public static IDictionary<string,object> AsPropertiesDictionary<T>(this TableRow row)
+		{
+			return row.Values().PropertiesDictionary<T>();
+		}
+		
+		internal static IDictionary<string,object> PropertiesDictionary<T>(this IEnumerable<KeyValuePair<string,string>> values)
+		{
+			var propertyValues = new Dictionary<string,object>();
+			foreach(var pair in values)
+			{
+				var propertyName = pair.Key;
+				var property = typeof(T).GetProperty(propertyName);
+				Tools.Check( property != null, "Unknown property {0} on type {1}", propertyName, typeof(T) );
+				var propertyValue = pair.Value;
+				var typedValue = Convert.ChangeType(propertyValue, property.PropertyType);
+				propertyValues[propertyName] = typedValue;
+			}
+			return propertyValues;
 		}
 		
 		public static T As<T>(this Table table) where T:class, new()

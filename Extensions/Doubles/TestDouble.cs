@@ -40,8 +40,8 @@ namespace Oaz.SpecFlowHelpers.Doubles
 				return null;
 			return proxy.Double;
 		}
-		
-		protected virtual void Execute (IInvocation invocation)
+
+		public void Intercept (IInvocation invocation)
 		{
 			var cmd = new Command<T>(invocation.Method, invocation.Arguments.AsEnumerable());
 			Commands.Add(cmd);
@@ -51,11 +51,6 @@ namespace Oaz.SpecFlowHelpers.Doubles
 				if( cmd.Method.ReturnType != typeof(void) )
 					invocation.ReturnValue = returnValue;
 			}
-		}
-
-		public void Intercept (IInvocation invocation)
-		{
-			Execute(invocation);
 		}
 		
 
