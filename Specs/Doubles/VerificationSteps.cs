@@ -30,7 +30,7 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
         [Given(@"a spy receiver without behaviour")]
         public void GivenAVerifiableReceiver()
         {
-            Instance.Of<Receiver>().IsSpy();
+            Instance.Of<Receiver>().IsTestDouble();
 			Assert.That( Instance.Of<Receiver>().Object, Is.Not.Null, "No instance of receiver created" );
 			Assert.False( Instance.Of<Exception>().Exists );
         }
@@ -38,7 +38,7 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
         [Given(@"a spy receiver with the following behaviour")]
         public void GivenTheSpyReceiverImplementsTheFollowingBehaviour(Table table)
         {
-            Instance.Of<Receiver>().IsSpy( table.AsSpyBehaviour<Receiver>(With.Syntax.Natural) );
+            Instance.Of<Receiver>().IsTestDouble().Setup( table.AsBehaviour<Receiver>(With.Syntax.Natural) );
 			Assert.That( Instance.Of<Receiver>().Object, Is.Not.Null, "No instance of receiver created" );
 			Assert.False( Instance.Of<Exception>().Exists, string.Format("Unexpected {0}",Instance.Of<Exception>()) );
         }

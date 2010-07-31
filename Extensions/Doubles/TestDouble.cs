@@ -11,7 +11,7 @@ namespace Oaz.SpecFlowHelpers.Doubles
 		internal TestDouble<T> Double { get; set; }
 	}
 	
-	public abstract class TestDouble<T> : IInterceptor where T:class
+	public class TestDouble<T> : IInterceptor where T:class
 	{
 		private static readonly ProxyGenerator _generator = new ProxyGenerator();
 
@@ -23,23 +23,42 @@ namespace Oaz.SpecFlowHelpers.Doubles
 			Object = _generator.CreateInterfaceProxyWithoutTarget<T>(options, this);
 			Proxy = (DoubleProxy<T>) (object) Object;
 			Proxy.Double = this;
+			
+			Commands = new List<Command<T>>();
+			Behaviour = null;
 		}
 		
 		internal DoubleProxy<T> Proxy { get; private set; }
 		public T Object { get; private set; }
+		public IList<Command<T>> Commands { get; private set; }
+		public Func<Command<T>,object> Behaviour {get; internal set;}
 	
 		public static TestDouble<T> Get(T obj)
 		{
-			var proxy = (DoubleProxy<T>) (object) obj;
+			var proxy = ((object) obj) as DoubleProxy<T>;
+			if( proxy == null )
+				return null;
 			return proxy.Double;
 		}
 		
-		protected abstract void Execute (IInvocation invocation);
+		protected virtual void Execute (IInvocation invocation)
+		{
+			var cmd = new Command<T>(invocation.Method, invocation.Arguments.AsEnumerable());
+			Commands.Add(cmd);
+			if(Behaviour != null)
+			{
+				var returnValue = Behaviour(cmd);
+				if( cmd.Method.ReturnType != typeof(void) )
+					invocation.ReturnValue = returnValue;
+			}
+		}
 
 		public void Intercept (IInvocation invocation)
 		{
 			Execute(invocation);
 		}
+		
+
 	}
 }
 

@@ -54,17 +54,17 @@ namespace Oaz.SpecFlowHelpers.Doubles
 				yield return cmdBuilder.Command<T>(row[0]);
 		}
 
-		public static Func<Command<T>,object> AsSpyBehaviour<T>(this Table table, ICreateCommands cmdBuilder) where T:class
+		public static Func<Command<T>,object> AsBehaviour<T>(this Table table, ICreateCommands cmdBuilder) where T:class
 		{
 			return Tools.HandleExceptionInstance(
 			  () =>
 			  {
-				return AsSpyBehaviourImpl<T>(table,cmdBuilder);
+				return AsBehaviourImpl<T>(table,cmdBuilder);
 			  }
 			);
 		}
 
-		private static Func<Command<T>,object> AsSpyBehaviourImpl<T>( Table table, ICreateCommands cmdBuilder) where T:class
+		private static Func<Command<T>,object> AsBehaviourImpl<T>( Table table, ICreateCommands cmdBuilder) where T:class
 		{
 			var cmds = AsCommandsImpl<T>(table, cmdBuilder).ToList();
 			return cmd =>
