@@ -7,37 +7,93 @@ namespace Oaz.SpecFlowHelpers.Doubles
 {
 	public static class TableExtensions
 	{
-		public static T AsStub<T>(this Table table) where T:class
+		public static Func<Command<T>,object> AsCommandBehaviour<T>(this Table table, ICreateCommands cmdBuilder) where T:class
 		{
 			return Tools.HandleExceptionInstance(
 			  () =>
 			  {
-				var stub = new TestStub<T>();
-				foreach(var row in table.Rows)
-					stub.SetupGet(row[0], row[1]);
+				return AsCommandBehaviourImpl<T>(table,cmdBuilder);
+			  }
+			);
+		}
+
+		private static Func<Command<T>,object> AsCommandBehaviourImpl<T>( Table table, ICreateCommands cmdBuilder) where T:class
+		{
+			var cmds = AsCommandsImpl<T>(table, cmdBuilder).ToList();
+			return cmd =>
+			{
+				var foundCmd = cmds.Find( c => c.Equals(cmd) );
+				if( foundCmd == null )
+					return null;
+				else
+					return foundCmd.Returns;
+			};
+		}
+		
+		public static Func<Command<T>,object> AsPropertiesBehaviour<T>(this Table table) where T:class
+		{
+			return Tools.HandleExceptionInstance(
+			  () =>
+			  {
+				return AsPropertiesBehaviourImpl<T>(table.ValuePairs());
+			  }
+			);
+		}
+
+		private static Func<Command<T>,object> AsPropertiesBehaviourImpl<T>( this IEnumerable<KeyValuePair<string,string>> values ) where T:class
+		{
+			var propertyValues = new Dictionary<string,object>();
+			foreach(var pair in values)
+			{
+				var propertyName = pair.Key;
+				var property = typeof(T).GetProperty(propertyName);
+				Tools.Check( property != null, "Unknown property {0} on type {1}", propertyName, typeof(T) );
+				var propertyValue = pair.Value;
+				var typedValue = Convert.ChangeType(propertyValue, property.PropertyType);
+				propertyValues["get_"+propertyName] = typedValue;
+			}
+			return cmd =>
+			{
+				if( !propertyValues.ContainsKey(cmd.Method.Name) )
+					return null;
+				else
+					return propertyValues[cmd.Method.Name];
+			};
+		}
+		
+		//=============================================
+
+		public static T AsTestDoubleWithProperties<T>(this Table table) where T:class
+		{
+			return Tools.HandleExceptionInstance(
+			  () =>
+			  {
+				var stub = new TestDouble<T>();
+				stub.Behaviour = table.AsPropertiesBehaviour<T>();
 				return stub.Object;
 			  }
 			);
 		}
 		
-		public static IEnumerable<T> AsStubEnumerable<T>(this Table table) where T:class
+		public static IEnumerable<T> AsTestDoubleWithPropertiesEnumerable<T>(this Table table) where T:class
 		{
 			return Tools.HandleExceptionInstance(
-			  () => AsStubEnumerableImpl<T>(table)
+			  () => AsTestDoubleWithPropertiesEnumerableImpl<T>(table)
 			);
 		}
 		
-		private static IEnumerable<T> AsStubEnumerableImpl<T>(Table table) where T:class
+		private static IEnumerable<T> AsTestDoubleWithPropertiesEnumerableImpl<T>(Table table) where T:class
 		{
 			foreach(var row in table.Rows)
 			{
-				var stub = new TestStub<T>();
-				foreach(var field in table.Header)
-					stub.SetupGet(field, row[field]);
+				var stub = new TestDouble<T>();
+				stub.Behaviour = row.Values().AsPropertiesBehaviourImpl<T>();
 				yield return stub.Object;
 			}
 		}
 		
+		//=============================================
+
 		public static IEnumerable<Command<T>> AsCommands<T>(this Table table, ICreateCommands cmdBuilder) where T:class
 		{
 			return Tools.HandleExceptionInstance(
@@ -54,28 +110,6 @@ namespace Oaz.SpecFlowHelpers.Doubles
 				yield return cmdBuilder.Command<T>(row[0]);
 		}
 
-		public static Func<Command<T>,object> AsBehaviour<T>(this Table table, ICreateCommands cmdBuilder) where T:class
-		{
-			return Tools.HandleExceptionInstance(
-			  () =>
-			  {
-				return AsBehaviourImpl<T>(table,cmdBuilder);
-			  }
-			);
-		}
-
-		private static Func<Command<T>,object> AsBehaviourImpl<T>( Table table, ICreateCommands cmdBuilder) where T:class
-		{
-			var cmds = AsCommandsImpl<T>(table, cmdBuilder).ToList();
-			return cmd =>
-			{
-				var foundCmd = cmds.Find( c => c.Equals(cmd) );
-				if( foundCmd == null )
-					return null;
-				else
-					return foundCmd.Returns;
-			};
-		}
 
 	}
 }

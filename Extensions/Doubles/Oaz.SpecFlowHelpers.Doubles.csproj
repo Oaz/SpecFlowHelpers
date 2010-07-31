@@ -49,7 +49,6 @@
     <Compile Include="InstanceExtensions.cs" />
     <Compile Include="TableExtensions.cs" />
     <Compile Include="TestDouble.cs" />
-    <Compile Include="TestStub.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Main\Oaz.SpecFlowHelpers.csproj">
