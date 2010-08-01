@@ -20,7 +20,7 @@ namespace Oaz.SpecFlowHelpers
 		{
 			Natural = new CreateCommandFromRegexes ()
 			{
-				MethodRegex = new Regex("^(.*?) [\"0-9]"),
+				MethodRegex = new Regex("^(?<method>.*?)( [\"0-9=]|$)"),
 				ParameterRegex = new Regex(" (\"(.*?)\"|[0-9]+)"),
 				ParameterDelta = 1,
 				ReturnsRegex = new Regex("=> (.*)"),
@@ -29,7 +29,7 @@ namespace Oaz.SpecFlowHelpers
 			
 			Functions = new CreateCommandFromRegexes ()
 			{
-				MethodRegex = new Regex("(.*)\\("),
+				MethodRegex = new Regex("(?<method>.*)\\("),
 				ParameterRegex = new Regex("[,\\(]([^,\\)]*)"),
 				ParameterDelta = 0,
 				ReturnsRegex = new Regex("=(.*)")

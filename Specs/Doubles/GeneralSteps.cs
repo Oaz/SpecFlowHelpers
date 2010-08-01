@@ -56,6 +56,12 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
 			);                                            
         }
 		
+        [Given(@"behaviour for '(.*)' is defined as following")]
+        public void GivenBehaviourForFooIsDefinedAsFollowing(string instanceName, Table table)
+        {
+            Instance.Of<IHaveDoubles>().Named(instanceName).Setup( table.AsCommandBehaviour<IHaveDoubles>(With.Syntax.Natural) );
+        }
+		
 		Type _actualType;
 		object _actual;
 		

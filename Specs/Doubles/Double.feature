@@ -27,3 +27,12 @@ Scenario: Test double should have behaviour on method returning value when other
 	And behaviour of method 'GetValue' for 'foo' returns '23'
 	When I call method 'GetName' on 'foo'
 	Then I get an exception: Unexpected call 'GetName' on test double
+	
+Scenario: Test double has behaviour defined by table
+	Given I have a test double named 'foo'
+	And behaviour for 'foo' is defined as following
+	 | Commands                                |
+	 | get value => 48                         |
+	When I call method 'GetValue' on 'foo'
+	Then I get the value '48'
+	And the value type is 'System.Int32'

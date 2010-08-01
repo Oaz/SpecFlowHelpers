@@ -47,10 +47,10 @@ namespace Oaz.SpecFlowHelpers.Doubles
 				propertyValues["get_"+pair.Key] = pair.Value;
 			return cmd =>
 			{
-				if( !propertyValues.ContainsKey(cmd.Method.Name) )
-					return null;
-				else
+				if( propertyValues.ContainsKey(cmd.Method.Name) )
 					return propertyValues[cmd.Method.Name];
+				else
+					return Behaviour.NotImplemented;
 			};
 		}
 		

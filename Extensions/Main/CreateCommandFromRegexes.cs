@@ -23,7 +23,7 @@ namespace Oaz.SpecFlowHelpers
 		public Command<T> Command<T>(string text)
 		{
 			var methodMatch = MethodRegex.Match( text );
-			var methodName = MethodNameBuilder(MatchValue(methodMatch));
+			var methodName = MethodNameBuilder(MatchValue(methodMatch,"method"));
 			var method = typeof(T).GetMethod(methodName);
 			Tools.Check( method != null, "Type <{0}> does not have a method named <{1}>", typeof(T), methodName );
 			if( method.ReturnType == typeof(void) )
@@ -72,6 +72,11 @@ namespace Oaz.SpecFlowHelpers
 		private static string MatchValue(Match m)
 		{
 			return m.Groups.Cast<Group>().Last(g=>g.Success).Value;
+		}
+		
+		private static string MatchValue(Match m,string name)
+		{
+			return m.Groups[name].Value;
 		}
 	}
 }
