@@ -46,23 +46,27 @@
     <Compile Include="Verification.feature.cs">
       <DependentUpon>Verification.feature</DependentUpon>
     </Compile>
-    <Compile Include="Input.feature.cs">
-      <DependentUpon>Input.feature</DependentUpon>
-    </Compile>
-    <Compile Include="InputSteps.cs" />
+    <Compile Include="PropertiesBehaviourSteps.cs" />
     <Compile Include="GeneralSteps.cs" />
+    <Compile Include="Double.feature.cs">
+      <DependentUpon>Double.feature</DependentUpon>
+    </Compile>
+    <Compile Include="PropertiesBehaviour.feature.cs">
+      <DependentUpon>PropertiesBehaviour.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Verification.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Verification.feature.cs</LastGenOutput>
     </None>
-    <None Include="Input.feature">
+    <None Include="PropertiesBehaviour.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>Input.feature.cs</LastGenOutput>
+      <LastGenOutput>PropertiesBehaviour.feature.cs</LastGenOutput>
     </None>
     <None Include="Double.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Double.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

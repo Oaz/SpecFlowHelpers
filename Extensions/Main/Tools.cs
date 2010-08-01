@@ -41,6 +41,7 @@ namespace Oaz.SpecFlowHelpers
 			if( !condition )
 				throw new ApplicationException(string.Format(message, args));
 		}
+		
 	}
 }
 

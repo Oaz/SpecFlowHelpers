@@ -7,14 +7,16 @@ Scenario: Test double has behaviour
 	Given I have a test double named 'foo'
 	And behaviour of method 'GetName' for 'foo' returns 'bar'
 	When I call method 'GetName' on 'foo'
-	Then I get the value 'bar'
+	Then I do not get any exception
+	And I get the value 'bar'
 	And the value type is 'System.String'
 	
 Scenario: Test double has another behaviour
 	Given I have a test double named 'foo'
 	And behaviour of method 'GetValue' for 'foo' returns '23'
 	When I call method 'GetValue' on 'foo'
-	Then I get the value '23'
+	Then I do not get any exception
+	And I get the value '23'
 	And the value type is 'System.Int32'
 	
 Scenario: Test double should have behaviour on method returning value
@@ -34,5 +36,24 @@ Scenario: Test double has behaviour defined by table
 	 | Commands                                |
 	 | get value => 48                         |
 	When I call method 'GetValue' on 'foo'
-	Then I get the value '48'
+	Then I do not get any exception
+	And I get the value '48'
+	And the value type is 'System.Int32'
+	
+Scenario: Test double with multiple behaviours
+	Given I have a test double named 'foo'
+	And behaviour of method 'GetName' for 'foo' returns 'bar'
+	And behaviour of method 'GetValue' for 'foo' returns '23'
+	When I call method 'GetName' on 'foo'
+	Then I do not get any exception
+	And I get the value 'bar'
+	And the value type is 'System.String'
+	
+Scenario: Test double with multiple behaviours bis
+	Given I have a test double named 'foo'
+	And behaviour of method 'GetName' for 'foo' returns 'bar'
+	And behaviour of method 'GetValue' for 'foo' returns '23'
+	When I call method 'GetValue' on 'foo'
+	Then I do not get any exception
+	And I get the value '23'
 	And the value type is 'System.Int32'

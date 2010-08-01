@@ -27,7 +27,8 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
 		[Then(@"I do not get any exception")]
 		public void ThenIDoNotGetAnException ()
 		{
-			Assert.False (Instance.Of<Exception> ().Exists);
+			if( Instance.Of<Exception> ().Exists )
+				Assert.Fail ("Unexpected exception: {0}",Instance.Of<Exception> ().Object.Message);
 		}
 		
 		

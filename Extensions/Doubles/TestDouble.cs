@@ -25,13 +25,13 @@ namespace Oaz.SpecFlowHelpers.Doubles
 			Proxy.Double = this;
 			
 			Commands = new List<Command<T>>();
-			Behaviour = null;
+			Behaviours = new List<Func<Command<T>, object>>();
 		}
 		
 		internal DoubleProxy<T> Proxy { get; private set; }
 		public T Object { get; private set; }
 		public IList<Command<T>> Commands { get; private set; }
-		private Func<Command<T>,object> Behaviour {get; set;}
+		private List<Func<Command<T>,object>> Behaviours {get; set;}
 	
 		public static TestDouble<T> Get(T obj)
 		{
@@ -43,7 +43,7 @@ namespace Oaz.SpecFlowHelpers.Doubles
 
 		public void Setup (Func<Command<T>,object> behaviour)
 		{
-			Behaviour = behaviour;
+			Behaviours.Add(behaviour);
 		}
 
 		public void Intercept (IInvocation invocation)
@@ -51,25 +51,21 @@ namespace Oaz.SpecFlowHelpers.Doubles
 			var cmd = new Command<T>(invocation.Method, invocation.Arguments.AsEnumerable());
 			Commands.Add(cmd);
 			
+			bool processed = (cmd.Method.ReturnType == typeof(void));
+			foreach(var behaviour in Behaviours)
+			{
+				var returnValue = behaviour(cmd);
+				if( returnValue.GetType() == typeof(BehaviourNotImplemented) )
+					continue;
+				if( cmd.Method.ReturnType != typeof(void) )
+					invocation.ReturnValue = returnValue;
+				processed = true;
+			}
 			Tools.Check(
-			  Behaviour!=null || cmd.Method.ReturnType == typeof(void),
+			  processed,
 			  "Unexpected call '{0}' on test double",
 			  cmd.Method.Name
 			);	
-			
-			if(Behaviour != null)
-			{
-				var returnValue = Behaviour(cmd);
-				if( cmd.Method.ReturnType != typeof(void) )
-				{
-					Tools.Check(
-					  returnValue.GetType() != typeof(BehaviourNotImplemented),
-					  "Unexpected call '{0}' on test double",
-					  cmd.Method.Name
-					);	
-					invocation.ReturnValue = returnValue;
-				}
-			}
 		}
 		
 
