@@ -61,9 +61,9 @@ namespace Oaz.SpecFlowHelpers.Doubles
 			return Tools.HandleExceptionInstance(
 			  () =>
 			  {
-				var stub = new TestDouble<T>();
-				stub.Behaviour = table.AsPropertiesBehaviour<T>();
-				return stub.Object;
+				var tdb = new TestDouble<T>();
+				tdb.Setup( table.AsPropertiesBehaviour<T>() );
+				return tdb.Object;
 			  }
 			);
 		}
@@ -79,9 +79,9 @@ namespace Oaz.SpecFlowHelpers.Doubles
 		{
 			foreach(var row in table.Rows)
 			{
-				var stub = new TestDouble<T>();
-				stub.Behaviour = row.AsPropertiesDictionary<T>().AsPropertiesBehaviourImpl<T>();
-				yield return stub.Object;
+				var tdb = new TestDouble<T>();
+				tdb.Setup( row.AsPropertiesDictionary<T>().AsPropertiesBehaviourImpl<T>() );
+				yield return tdb.Object;
 			}
 		}
 		

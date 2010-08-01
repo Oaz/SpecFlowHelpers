@@ -11,7 +11,7 @@ namespace Oaz.SpecFlowHelpers.Doubles
 		internal TestDouble<T> Double { get; set; }
 	}
 	
-	public class TestDouble<T> : IInterceptor where T:class
+	internal class TestDouble<T> : IInterceptor where T:class
 	{
 		private static readonly ProxyGenerator _generator = new ProxyGenerator();
 
@@ -31,7 +31,7 @@ namespace Oaz.SpecFlowHelpers.Doubles
 		internal DoubleProxy<T> Proxy { get; private set; }
 		public T Object { get; private set; }
 		public IList<Command<T>> Commands { get; private set; }
-		public Func<Command<T>,object> Behaviour {get; internal set;}
+		private Func<Command<T>,object> Behaviour {get; set;}
 	
 		public static TestDouble<T> Get(T obj)
 		{
@@ -39,6 +39,11 @@ namespace Oaz.SpecFlowHelpers.Doubles
 			if( proxy == null )
 				return null;
 			return proxy.Double;
+		}
+
+		public void Setup (Func<Command<T>,object> behaviour)
+		{
+			Behaviour = behaviour;
 		}
 
 		public void Intercept (IInvocation invocation)

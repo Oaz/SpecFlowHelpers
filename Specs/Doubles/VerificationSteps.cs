@@ -20,12 +20,6 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
 	[Binding]
 	public class VerificationSteps
 	{
-		[Then(@"I get an exception: (.*)")]
-		public void ThenIGetAnException (string message)
-		{
-			Assert.That (Instance.Of<Exception> ().Object, Is.Not.Null);
-			Assert.That (Instance.Of<Exception> ().Object.Message, Contains.Substring (message));
-		}
 		
         [Given(@"a spy receiver without behaviour")]
         public void GivenAVerifiableReceiver()

@@ -68,7 +68,7 @@ Scenario: Input with unknown property
 	 | Field           | Value               |
 	 | AWrongProperty  | Whatever            |
 	When I do nothing
-	Then I get an exception 'Unknown property AWrongProperty on type Specs.Oaz.SpecFlowHelpers.Doubles.Stuff'
+	Then I get an exception: Unknown property AWrongProperty on type Specs.Oaz.SpecFlowHelpers.Doubles.Stuff
 	
 Scenario: group of inputs with properties
 	Given I have lots of Stuff defined as following

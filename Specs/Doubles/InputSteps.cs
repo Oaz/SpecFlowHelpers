@@ -19,26 +19,6 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
 	[Binding]
 	public class InputSteps
 	{
-        [When(@"I do nothing")]
-        public void WhenIDoNothing()
-        {
-        }
-
-		[Then(@"I get an exception '(.*)'")]
-		public void ThenIGetAnException (string message)
-		{
-			Assert.True (Instance.Of<Exception> ().Exists);
-			Assert.That (Instance.Of<Exception> ().Object.Message, Contains.Substring (message));
-		}
-
-		[Then(@"I do not get any exception")]
-		public void ThenIDoNotGetAnException ()
-		{
-			Assert.False (Instance.Of<Exception> ().Exists);
-		}
-		
-		//===============================
-		
 		[Given(@"I have Stuff defined as following")]
 		public void GivenIHaveStuffDefinedAsFollowing (Table table)
 		{

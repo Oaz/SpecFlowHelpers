@@ -22,7 +22,7 @@ namespace Oaz.SpecFlowHelpers.Doubles
 		
 		public static InstanceHandler<T> Setup<T>(this InstanceHandler<T> ih, Func<Command<T>,object> behaviour) where T:class
 		{
-			ih.AsTestDouble().Behaviour = behaviour;
+			ih.AsTestDouble().Setup( behaviour );
 			return ih;
 		}
 		 
