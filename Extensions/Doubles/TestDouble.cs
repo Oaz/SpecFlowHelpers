@@ -50,11 +50,25 @@ namespace Oaz.SpecFlowHelpers.Doubles
 		{
 			var cmd = new Command<T>(invocation.Method, invocation.Arguments.AsEnumerable());
 			Commands.Add(cmd);
+			
+			Tools.Check(
+			  Behaviour!=null || cmd.Method.ReturnType == typeof(void),
+			  "Unexpected call '{0}' on test double",
+			  cmd.Method.Name
+			);	
+			
 			if(Behaviour != null)
 			{
 				var returnValue = Behaviour(cmd);
 				if( cmd.Method.ReturnType != typeof(void) )
+				{
+					Tools.Check(
+					  returnValue.GetType() != typeof(BehaviourNotImplemented),
+					  "Unexpected call '{0}' on test double",
+					  cmd.Method.Name
+					);	
 					invocation.ReturnValue = returnValue;
+				}
 			}
 		}
 		

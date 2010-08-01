@@ -5,6 +5,7 @@ using TechTalk.SpecFlow;
 using NUnit.Framework;
 using Oaz.SpecFlowHelpers;
 using Oaz.SpecFlowHelpers.Doubles;
+using System.Reflection;
 
 namespace Specs.Oaz.SpecFlowHelpers.Doubles
 {
@@ -50,8 +51,7 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
 			  {
 				if( cmd.Method.Name == methodName )
 					return Convert.ChangeType(retVal, cmd.Method.ReturnType);
-				else
-					return null;
+				return Behaviour.NotImplemented;
 			  }
 			);                                            
         }
@@ -64,10 +64,18 @@ namespace Specs.Oaz.SpecFlowHelpers.Doubles
         {
 			var method = typeof(IHaveDoubles).GetMethod(methodName);
 			_actualType = method.ReturnType;
-			_actual = method.Invoke(
-            	Instance.Of<IHaveDoubles>().Named(instanceName).Object,
-			    null
-			);
+			
+			try
+			{                        
+				_actual = method.Invoke(
+	            	Instance.Of<IHaveDoubles>().Named(instanceName).Object,
+				    null
+				);
+			}
+			catch(TargetInvocationException e)
+			{
+				Instance.Of<Exception>().Is(e.InnerException);
+			}
         }
 		
         [Then(@"I get the value '(.*)'")]

@@ -24,7 +24,7 @@ namespace Oaz.SpecFlowHelpers.Doubles
 			{
 				var foundCmd = cmds.Find( c => c.Equals(cmd) );
 				if( foundCmd == null )
-					return null;
+					return Behaviour.NotImplemented;
 				else
 					return foundCmd.Returns;
 			};
