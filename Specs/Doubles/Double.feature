@@ -57,3 +57,25 @@ Scenario: Test double with multiple behaviours bis
 	Then I do not get any exception
 	And I get the value '23'
 	And the value type is 'System.Int32'
+	
+Scenario: Test double with multiple behaviours of different type
+	Given I have a test double named 'foo'
+	And behaviour of method 'GetName' for 'foo' returns 'bar'
+	And behaviour for 'foo' is defined as following
+	 | Commands                                |
+	 | get value => 48                         |
+	When I call method 'GetName' on 'foo'
+	Then I do not get any exception
+	And I get the value 'bar'
+	And the value type is 'System.String'
+	
+Scenario: Test double with multiple behaviours of different type bis
+	Given I have a test double named 'foo'
+	And behaviour of method 'GetName' for 'foo' returns 'bar'
+	And behaviour for 'foo' is defined as following
+	 | Commands                                |
+	 | get value => 48                         |
+	When I call method 'GetValue' on 'foo'
+	Then I do not get any exception
+	And I get the value '48'
+	And the value type is 'System.Int32'
